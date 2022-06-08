@@ -1,0 +1,17 @@
+#include <ultra64.h>
+#include "sm64.h"
+#include "surface_terrains.h"
+#include "moving_texture_macros.h"
+#include "level_misc_macros.h"
+#include "macro_preset_names.h"
+#include "special_preset_names.h"
+#include "textures.h"
+#include "dialog_ids.h"
+
+#include "make_const_nonconst.h"
+#include "levels/ddd/texture.inc.c"
+#include "levels/ddd/areas/1/custom/datainclude.h"
+#include "levels/ddd/areas/2/custom/datainclude.h"
+#include "levels/ddd/areas/1/movtext.inc.c"
+#include "levels/ddd/areas/2/movtext.inc.c"
+#include "levels/ddd/areamap.inc.c"

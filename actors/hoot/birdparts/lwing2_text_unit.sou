@@ -1,0 +1,52 @@
+/***************************************************************************************************
+		Convert from NINGEN		(wing7) 																
+****************************************************************************************************/
+
+#define SCALE 0.25
+#define ShapeColor_wing7(R,G,B) {  {R*SCALE ,G*SCALE ,B*SCALE ,0 ,R*SCALE ,G*SCALE ,B*SCALE ,0 },{ R, G, B, 0, R, G, B, 0, LIGHT_X, LIGHT_Y, LIGHT_Z, 0} }
+
+static Lights1 light_wing7[] = {
+	ShapeColor_wing7(255,255,255),
+};
+
+static Vtx vtx_wing7[] = {
+	{    119,      0,    -85,    0, 1972,   68,     0,  127,    0,0}, 
+	{      0,      0,     96,    0,  964, 2040,     0,  127,    0,0}, 
+	{    119,      0,     77,    0, 1976, 1840,     0,  127,    0,0}, 
+	{    119,      0,    -85,    0, 1972,   68,     0,  127,    0,0}, 
+	{      0,      0,    -47,    0,  960,  484,     0,  127,    0,0}, 
+	{      0,      0,     96,    0,  964, 2040,     0,  127,    0,0}, 
+};
+
+static Gfx gfx_wing7_0[] = {
+	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, wingA_1_txt),
+
+    gsxDPLoadTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0,
+			 G_TX_WRAP | G_TX_NOMIRROR, G_TX_WRAP | G_TX_NOMIRROR,
+			 G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD	),
+
+	gsSPLight((&light_wing7[0].l[0]),1 ),
+	gsSPLight((&light_wing7[0].a   ),2 ),
+
+	gsSPVertex(&vtx_wing7[0], 12, 0), 
+	gsSP1Triangle( 0, 1, 2, 0),
+	gsSP1Triangle( 3, 4, 5, 0),
+	gsSPEndDisplayList() 
+};
+
+Gfx gfx_lwing2[] = {
+	gsDPPipeSync(),
+	gsSPTexture(0x8000,0x8000, 0, G_TX_RENDERTILE, G_ON),
+	gsDPSetCombineMode(G_CC_DECALRGBA, G_CC_DECALRGBA),
+	gsSPClearGeometryMode(G_CULL_BACK),
+
+	gsSPDisplayList(gfx_wing7_0),
+
+	gsSPTexture(0x8000, 0x8000, 1, 1, 0),
+
+	gsDPPipeSync(),
+	gsSPSetGeometryMode(G_CULL_BACK),
+	gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
+	gsSPEndDisplayList() 
+};
+

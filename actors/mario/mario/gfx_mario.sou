@@ -1,0 +1,39 @@
+/********************************************************************************/
+/*	Mario gfx list.																*/
+/********************************************************************************/
+
+#define		G_CC_MARIO_MAPPING		TEXEL0, SHADE, TEXEL0_ALPHA, SHADE,  0,0,0,ENVIRONMENT
+#define		G_CC_MARIO_NORMAL			 0,		 0,			  0, SHADE,  0,0,0,ENVIRONMENT
+
+#define	SCALE	4
+#define ShapeColor_mario(R,G,B) {{R/SCALE ,G/SCALE ,B/SCALE ,0 ,R/SCALE ,G/SCALE ,B/SCALE ,0 },{ R, G, B, 0, R, G, B, 0, 40, 40, 40, 0}}
+
+
+/********************************************************************************/
+/*	Matrial (light) datas														*/
+/********************************************************************************/
+
+static Lights1	light_mario[] = {
+	ShapeColor_mario(  0,   0, 255),
+	ShapeColor_mario(255,   0,   0),
+	ShapeColor_mario(255, 255, 255),
+	ShapeColor_mario(114,  28,  14),
+	ShapeColor_mario(254, 193, 121),
+	ShapeColor_mario( 68,   6,   0),
+};
+
+/********************************************************************************/
+/*	Graphic display list datas													*/
+/********************************************************************************/
+
+#include "mario_texture.h"
+#include "mario_near_poly.sou"
+#include "mario_near_body.sou"
+#include "mario_near_head.sou"
+#include "mario_mid_poly.sou"
+#include "mario_mid_body.sou"
+#include "mario_far_poly.sou"
+#include "mario_far_body.sou"
+#include "mario_far_head.sou"
+#include "mario_swim_hand.sou"
+#include "mario_vsign_hand.sou"

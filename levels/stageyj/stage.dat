@@ -1,0 +1,183 @@
+/********************************************************************************
+						Ultra 64 MARIO Brothers
+						 --------------------
+						 yajima special stage
+						 --------------------
+ ********************************************************************************/
+
+#ifdef	ASSEMBLER
+
+const LevelScript level_yajima_entry[] = {
+
+	INIT_LEVEL()
+	LOAD_MIO0(SEGMENT_STAGE1, _GfxStage32SegmentRomStart, _GfxStage32SegmentRomEnd)
+	LOAD_MIO0(SEGMENT_ENEMY1	  , _GfxEnemy1_hSegmentRomStart	  , _GfxEnemy1_hSegmentRomEnd	)
+	LOAD_RAW(SEGMENT_ENEMYDATA1, _HmsEnemy1_hSegmentRomStart	  , _HmsEnemy1_hSegmentRomEnd	)
+	LOAD_MIO0(SEGMENT_ENEMY3	  ,  _GfxBasic_enemySegmentRomStart,  _GfxBasic_enemySegmentRomEnd)
+	LOAD_RAW(SEGMENT_ENEMYDATA3,  _HmsBasic_enemySegmentRomStart,  _HmsBasic_enemySegmentRomEnd)
+
+	ALLOC_LEVEL_POOL()
+
+		MARIO(MODEL_MARIO, 0x00000001, bhvMario)
+		JUMP_LINK(SetBasicEnemy)
+		JUMP_LINK(SetEnemy1_h)
+
+		AREA(1, RCP_Stage32Scene1)
+
+		OBJECT(S_pushblock,	1242, 200, 1959,   0,0,0,  0,0, e_pushblock	)
+
+#if 0																				  
+/*
+
+			 OBJECT(S_carryboy		,	-1000, 0,  0,   0,0,0,  0,0,0, e_carryboy	) 
+			 OBJECT(S_carryboy		,	-1000, 0,  0,   0,0,0,  0,0,0, e_carryboy	) 
+
+
+			OBJECT(S_bikkuri_button	,	-1500,   0,   1000,   0,0,0,  0,0,0, e_bikkuri_switch	)
+			OBJECT(S_bikkuri_button	,	 -500,   0,  -1000,   0,0,0,  0,1,0, e_bikkuri_switch	)
+			OBJECT(S_bikkuri_button	,	  500,   0,  -1000,   0,0,0,  0,2,0, e_bikkuri_switch	)
+
+			OBJECT(S_itembox			,    -400,  250,  1500,   0,0,0,  0,0, 0, e_itembox 	 	)
+			OBJECT(S_itembox			,    -800,  250,  1500,   0,0,0,  0,1, 0, e_itembox 	 	)
+			OBJECT(S_itembox			,   -1200,  250,  1500,   0,0,0,  0,2, 0, e_itembox 	 	)
+
+			 OBJECT(S_hibiblock		,	-2867, 331,   -895,   0,0,0,  0,0,0, e_testball	) 
+
+			OBJECT(S_hanbutton,    0, 0, -900,   0,0,0,  0,0,0,	e_onoff_switch )
+
+			OBJECT(S_hanbutton,    0, 0, -300,   0,0,0,  0,0,0,	e_timeblock_switch )
+			OBJECT(S_hibiblock, -500, 0, -700,   0,0,0,  0,0,0,	e_timeblock )
+			OBJECT(S_hibiblock,    0, 0, -700,   0,0,0,  0,1,0,	e_timeblock )
+			OBJECT(S_hibiblock,  500, 0, -700,   0,0,0,  0,2,0,	e_timeblock )
+
+			OBJECT(S_pushblock, 1000, 0, -1000,   0,0,0,  0,0,0,	e_pushblock )
+
+			OBJECT(S_NULL,	  -3000, 0, 2000,   0,0,0,  0,0,0,	e_manycoin  )
+			OBJECT(S_NULL,	  -2000, 0, 2000,   0,0,0,  0,1,0,	e_manycoin  )
+			OBJECT(S_NULL,	  -1000, 0, 2000,   0,0,0,  0,2,0,	e_manycoin  )
+			OBJECT(S_NULL,	      0, 0, 2000,   0,0,0,  0,3,0,	e_manycoin  )
+			OBJECT(S_NULL,	    500, 0, 2000,   0,0,0,  0,4,0,	e_manycoin  )
+
+			OBJECT(S_NULL,	  -3000, 200, 1000,   0,0,0,  0,0x10,0,	e_manycoin  )
+			OBJECT(S_NULL,	  -2000, 200, 1000,   0,0,0,  0,0x11,0,	e_manycoin  )
+			OBJECT(S_NULL,	  -1000, 200, 1000,   0,0,0,  0,0x12,0,	e_manycoin  )
+			OBJECT(S_NULL,	      0, 200, 1000,   0,0,0,  0,0x13,0,	e_manycoin  )
+			OBJECT(S_NULL,	    500, 200, 1000,   0,0,0,  0,0x14,0,	e_manycoin  )
+
+			OBJECT(S_NULL , 	0, 100,-500,   0,0,0,   0,0,0, e_wind	) 
+			OBJECT(S_ping ,-900,   0, 500,   0,90,0,  0,0,0, e_wind_ping ) 
+
+			OBJECT(S_itembox			,     000,  250,  1500,   0,0,0,  0,7, 0, e_itembox 	 	) 
+			OBJECT(S_itembox			,    -400,  250,  1500,   0,0,0,  0,0, 0, e_itembox 	 	)
+			OBJECT(S_itembox			,    -800,  250,  1500,   0,0,0,  0,1, 0, e_itembox 	 	)
+			OBJECT(S_itembox			,   -1200,  250,  1500,   0,0,0,  0,2, 0, e_itembox 	 	)
+			OBJECT(S_itembox			,   -1600,  250,  1500,   0,0,0,  0,3, 0, e_itembox 	 	)	
+			OBJECT(S_itembox			,   -2000,  250,  1500,   0,0,0,  0,4, 0, e_itembox  	 	)
+			OBJECT(S_itembox			,   -2400,  250,  1500,   0,0,0,  0,5, 0, e_itembox  	 	)
+			OBJECT(S_itembox			,   -2800,  250,  1500,   0,0,0,  0,6, 0, e_itembox  	 	)
+			OBJECT(S_itembox			,   -3200,  250,  1500,   0,0,0,  0,8, 0, e_itembox  	 	)
+			OBJECT(S_bikkuri_button	,	-1500,   0,  -1000,   0,0,0,  0,0,0, e_bikkuri_switch	)
+			OBJECT(S_bikkuri_button	,	 -500,   0,  -1000,   0,0,0,  0,1,0, e_bikkuri_switch	)
+			OBJECT(S_bikkuri_button	,	  500,   0,  -1000,   0,0,0,  0,2,0, e_bikkuri_switch	)
+
+			OBJECT(S_NULL				,	  200,    0,      0,  0,0,0,  0,1,0, e_hanswitch 	 )
+			OBJECT(S_NULL				,	  600,    0,      0,  0,0,0,  0,0,0, e_hanswitch 	 )
+
+			OBJECT(S_monky			,      0,   200,     0,   0,0,0,  0,0,0, e_monky			)
+			OBJECT(S_horiage			,   2000,   200,  2000,   0,0,0,  0,0,0, e_horiage			)
+			OBJECT(S_motosman			,	    0,    0, -1500,   0,0,0,  0,0,0, e_motos			)
+			OBJECT(S_hibiblock		,  	 1000,    0,     0,   0,0,0,  0,0,0, e_osublock			)
+			OBJECT(S_itemhat_metalwing,    -200,  200,  2500,   0,0,0,  0,0,0, e_hat_metal_wing	)
+			OBJECT(S_itemhat_metal 	,    -600,  200,  2500,   0,0,0,  0,0,0, e_hat_metal 		)
+			OBJECT(S_itemhat_wing  	,    -400,  200,  2500,   0,0,0,  0,0,0, e_hat_wing 		)
+			OBJECT(S_itemhat_hat 		,    -800,  200,  2500,   0,0,0,  0,0,0, e_hat				)
+			OBJECT(S_hibiblock		,       0,  200,  3000,   0,0,0,  0,0,0, e_hibiblock		)
+			OBJECT(S_hibiblock		,     500,    0,  3000,   0,0,0,  0,0,0, e_hibiblock		)
+
+			OBJECT(S_NULL 			,    -400,  300,   500,   0,0,0,  0,0,0, e_qbox				)
+			OBJECT(S_NULL 			,    -800,  300,   500,   0,0,0,  0,1,0, e_qbox				)
+			OBJECT(S_NULL 			,   -1200,  300,   500,   0,0,0,  0,2,0, e_qbox 			)
+			OBJECT(S_NULL 			,   -1400,  300,   500,   0,0,0,  0,3,0, e_qbox 			)
+
+			OBJECT(S_nokonoko 		,       0,    0,  -500,   0,0,0,  0,1,0, e_noko				)
+
+			OBJECT(S_bikkuri_button	,	-1500,    0,     0,   0,0,0,  0,0,0, e_bikkuri_switch	)
+			OBJECT(S_bikkuri_button	,	 -500,    0,     0,   0,0,0,  0,1,0, e_bikkuri_switch	)
+			OBJECT(S_bikkuri_button	,	  500,    0,     0,   0,0,0,  0,2,0, e_bikkuri_switch	)
+			OBJECT(S_bikkuri_button	,	 1500,    0,     0,   0,0,0,  0,3,0, e_bikkuri_switch	)
+
+			OBJECT(S_hibiblock		,       0,    0,  -500,   0,0,0,  0,0,0, e_hibiblock		)
+
+			OBJECT(S_BCbutton			,	    0,    0,   500,   0,0,0,  0,0,0, e_switchcoin		)
+			OBJECT(S_bluecoin			,	    0,    0,   200,   0,0,0,  0,0,0, e_bluecoin			)
+			OBJECT(S_bluecoin			,	  200,    0,   200,   0,0,0,  0,0,0, e_bluecoin			)
+			OBJECT(S_bluecoin			,	  400,    0,   200,   0,0,0,  0,0,0, e_bluecoin			)
+			OBJECT(S_bluecoin			,	 -200,    0,   200,   0,0,0,  0,0,0, e_bluecoin			)
+			OBJECT(S_bluecoin			,	 -400,    0,   200,   0,0,0,  0,0,0, e_bluecoin			)
+
+
+*/
+#endif
+	
+
+
+			TERRAIN(testmap1_info)			
+
+		END_AREA()
+	FREE_LEVEL_POOL()
+
+
+	FREE_LEVEL_POOL(1, 0,  0,0,0)
+
+	CALL(GameProcess, 0)
+	CALL(0, lvl_init_or_update),
+	CALL_LOOP(1, lvl_init_or_update),
+	CLEAR_LEVEL(),
+	SLEEP_BEFORE_EXIT(1),
+	EXIT(),
+
+#else
+
+/********************************************************************************/
+/*	Hierarchy map scene 1.														*/
+/********************************************************************************/
+
+extern ulong DrawBackGround(int code, MapNode *node, void *data);
+extern ulong WeatherProc(int code, MapNode *node, void *data);
+extern ulong GameCamera(int code, MapNode *node, void *data);
+
+			 
+Hierarchy RCP_Stage32Scene1[] = {
+	hmsScene(160, 120, 160, 120, 10)
+	hmsBegin()
+		hmsLayer(0)
+		hmsBegin()
+			hmsOrtho(100)
+			hmsBegin()
+				hmsClear(RGBA16(0,0,0,1), NULL)
+			hmsEnd()
+		hmsEnd()
+
+		hmsLayer(1)			/* Zbuffer ON	 */
+		hmsBegin()
+			hmsPerspective(45, SCREEN_NEAR, 32000, ZoomControl)
+			hmsBegin()
+				hmsCamera(CAM_FIELD,  0,2000,6000,  0,0,-4000, GameCamera)
+				hmsBegin()
+					hmsGfx(RM_SURF,  RCP_testmap1)
+					hmsObject()
+					hmsCProg(0, WeatherProc)
+				hmsEnd()
+			hmsEnd()
+		hmsEnd()
+
+	hmsEnd()
+	hmsExit()
+};
+
+#endif
+
+/*==============================================================================
+  		END END END
+===============================================================================*/
+

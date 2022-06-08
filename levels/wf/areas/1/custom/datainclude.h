@@ -1,0 +1,18 @@
+#include "levels/wf/areas/1/custom/1/model.inc.c"
+#include "levels/wf/areas/1/custom/5/model.inc.c"
+#include "levels/wf/areas/1/custom/6/model.inc.c"
+#include "levels/wf/areas/1/custom/7/model.inc.c"
+#include "levels/wf/areas/1/custom/8/model.inc.c"
+#include "levels/wf/areas/1/custom/9/model.inc.c"
+#include "levels/wf/areas/1/custom/10/model.inc.c"
+#include "levels/wf/areas/1/custom/12/model.inc.c"
+#include "levels/wf/areas/1/custom/13/model.inc.c"
+#include "levels/wf/areas/1/custom/15/model.inc.c"
+#include "levels/wf/areas/1/custom/16/model.inc.c"
+#include "levels/wf/areas/1/custom/rotating_wooden_platform/3.inc.c"
+#include "levels/wf/areas/1/custom/extending_platform/3.inc.c"
+
+#include "levels/wf/areas/1/custom/10/collision.inc.c"
+#include "levels/wf/areas/1/custom/collision.inc.c"
+
+#include "levels/wf/areas/1/custom/macro.inc.c"
