@@ -294,8 +294,7 @@ static s32 boo_get_attack_status(void) {
     s32 attackStatus = BOO_NOT_ATTACKED;
 
     if (o->oInteractStatus & INT_STATUS_INTERACTED) {
-        if ((o->oInteractStatus & INT_STATUS_WAS_ATTACKED)
-            && obj_has_attack_type(ATTACK_FROM_ABOVE) == FALSE) {
+        if (o->oInteractStatus & INT_STATUS_WAS_ATTACKED) {
             cur_obj_become_intangible();
 
             o->oInteractStatus = 0;
@@ -404,7 +403,7 @@ static void boo_act_1(void) {
     }
 
     if (attackStatus == BOO_BOUNCED_ON) {
-        o->oAction = 3;
+        o->oAction = 2;
     }
 
     if (attackStatus == BOO_ATTACKED) {
