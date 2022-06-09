@@ -6,6 +6,7 @@
 #include "ingame_menu.h"
 #include "envfx_snow.h"
 #include "envfx_bubbles.h"
+#include "area.h"
 #include "engine/surface_collision.h"
 #include "engine/math_util.h"
 #include "engine/behavior_script.h"
@@ -493,6 +494,10 @@ Gfx *envfx_update_snow(s32 snowMode, Vec3s marioPos, Vec3s camFrom, Vec3s camTo)
 Gfx *envfx_update_particles(s32 mode, Vec3s marioPos, Vec3s camTo, Vec3s camFrom) {
     Gfx *gfx;
 
+	if (gWarpTransition.isActive) {
+		return NULL;
+	}
+	
     if (get_dialog_id() != -1) {
         return NULL;
     }
