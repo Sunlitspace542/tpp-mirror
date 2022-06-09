@@ -61,8 +61,7 @@ Resulting artifacts can be found in the `build` directory.
 
 #### 1. Copy baserom(s) for asset extraction
 
-For each version (jp/us/eu) that you want to build a ROM for, put an existing ROM at
-`./baserom.<version>.z64` for asset extraction.
+To build TPP, you must provide a japanese ROM `./baserom.jp.z64` in the root folder for asset extraction.
 
 #### 2. Install build dependencies
 
@@ -94,7 +93,7 @@ Install the following AUR packages:
 
 #### 3. Build ROM
 
-Run `make` to build the ROM (defaults to `VERSION=us`). Make sure your path to the repo 
+Run `make` to build the ROM (defaults to `VERSION=jp`). Make sure your path to the repo 
 is not too long or else this process will error, as the emulated IDO compiler cannot 
 handle paths longer than 255 characters.
 Examples:
