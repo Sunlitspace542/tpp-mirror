@@ -30,6 +30,31 @@ static const LevelScript script_func_local_2[] = {
     RETURN(),
 };
 
+static const LevelScript script_func_local_area_2[] = {
+    OBJECT(/*model*/ MODEL_TTM_BLUE_SMILEY,   /*pos*/  4389,  3620,   624, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvStaticObject),
+    OBJECT(/*model*/ MODEL_TTM_YELLOW_SMILEY, /*pos*/ -1251,  2493,  2224, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvStaticObject),
+    OBJECT(/*model*/ MODEL_TTM_STAR_SMILEY,   /*pos*/ -2547,  1365,  -520, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvStaticObject),
+    OBJECT(/*model*/ MODEL_TTM_MOON_SMILEY,   /*pos*/  -324,   989, -4090, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvStaticObject),
+    RETURN(),
+};
+
+static const LevelScript script_func_local_area_3[] = {
+    OBJECT(/*model*/ MODEL_TTM_BLUE_SMILEY,   /*pos*/  7867,  -959, -6085, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvStaticObject),
+    OBJECT(/*model*/ MODEL_TTM_BLUE_SMILEY,   /*pos*/ -5241,  5329,  9466, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvStaticObject),
+    OBJECT(/*model*/ MODEL_TTM_YELLOW_SMILEY, /*pos*/ -1869, -5311,  7358, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvStaticObject),
+    OBJECT(/*model*/ MODEL_TTM_STAR_SMILEY,   /*pos*/ -9095,  4262,  5348, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvStaticObject),
+    OBJECT(/*model*/ MODEL_TTM_MOON_SMILEY,   /*pos*/ -8477,   730, -7122, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvStaticObject),
+    OBJECT(/*model*/ MODEL_TTM_MOON_SMILEY,   /*pos*/  6160, -6076,  7861, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvStaticObject),
+    RETURN(),
+};
+
+static const LevelScript script_func_local_area_4[] = {
+    OBJECT(/*model*/ MODEL_TTM_YELLOW_SMILEY, /*pos*/  5157,  1974, -8292, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvStaticObject),
+    OBJECT(/*model*/ MODEL_TTM_STAR_SMILEY,   /*pos*/ 11106,  2588,   381, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvStaticObject),
+    OBJECT(/*model*/ MODEL_TTM_MOON_SMILEY,   /*pos*/    37,  1974, -1124, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvStaticObject),
+    RETURN(),
+};
+
 const LevelScript level_ccm_entry[] = {
     INIT_LEVEL(),
     LOAD_RAW(         /*seg*/ 0x07, _ccm_segment_7SegmentRomStart, _ccm_segment_7SegmentRomEnd),
@@ -47,6 +72,11 @@ const LevelScript level_ccm_entry[] = {
     JUMP_LINK(script_func_global_1),
     JUMP_LINK(script_func_global_8),
     JUMP_LINK(script_func_global_17),
+    LOAD_MODEL_FROM_GEO(MODEL_TTM_SLIDE_EXIT_PODIUM, ccm_geo_000DF4),
+    LOAD_MODEL_FROM_GEO(MODEL_TTM_BLUE_SMILEY,       ccm_geo_000D14),
+    LOAD_MODEL_FROM_GEO(MODEL_TTM_YELLOW_SMILEY,     ccm_geo_000D4C),
+    LOAD_MODEL_FROM_GEO(MODEL_TTM_STAR_SMILEY,       ccm_geo_000D84),
+    LOAD_MODEL_FROM_GEO(MODEL_TTM_MOON_SMILEY,       ccm_geo_000DBC),
 
     AREA(/*index*/ 1, snow_slider_geo),
         OBJECT(/*model*/ MODEL_NONE, /*pos*/  1671,  6902, -1756, /*angle*/ 0,   0, 0, /*behParam*/ 0x000A0000, /*beh*/ bhvWarps74),
@@ -54,7 +84,7 @@ const LevelScript level_ccm_entry[] = {
         OBJECT(/*model*/ MODEL_NONE, /*pos*/  2696,  5284,  -316, /*angle*/ 0, -90, 0, /*behParam*/ 0x0F1E0000, /*beh*/ bhvWarp),
         WARP_NODE(/*id*/ 0x0A, /*destLevel*/ LEVEL_CCM, /*destArea*/ 0x01, /*destNode*/ 0x0A, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ 0x14, /*destLevel*/ LEVEL_CCM, /*destArea*/ 0x01, /*destNode*/ 0x14, /*flags*/ WARP_NO_CHECKPOINT),
-        WARP_NODE(/*id*/ 0x1E, /*destLevel*/ LEVEL_TTM, /*destArea*/ 0x02, /*destNode*/ 0x0A, /*flags*/ WARP_NO_CHECKPOINT),
+        WARP_NODE(/*id*/ 0x1E, /*destLevel*/ LEVEL_CCM, /*destArea*/ 0x02, /*destNode*/ 0x0A, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ 0x1F, /*destLevel*/ LEVEL_CCM, /*destArea*/ 0x01, /*destNode*/ 0x20, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ 0x20, /*destLevel*/ LEVEL_CCM, /*destArea*/ 0x01, /*destNode*/ 0x1F, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ 0xF0, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x32, /*flags*/ WARP_NO_CHECKPOINT),
@@ -65,6 +95,42 @@ const LevelScript level_ccm_entry[] = {
         SHOW_DIALOG(/*index*/ 0x00, DIALOG_048),
         SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0000, /*seq*/ SEQ_LEVEL_GRASS),
         TERRAIN_TYPE(/*terrainType*/ TERRAIN_SNOW),
+    END_AREA(),
+
+    AREA(/*index*/ 2, ccm_geo_000B5C),
+        OBJECT(/*model*/ MODEL_NONE, /*pos*/ 7000, 5381, 6750, /*angle*/ 0, 225, 0, /*behParam*/ 0x000A0000, /*beh*/ bhvWarps64),
+        WARP_NODE(/*id*/ 0x0A, /*destLevel*/ LEVEL_CCM, /*destArea*/ 0x02, /*destNode*/ 0x0A, /*flags*/ WARP_NO_CHECKPOINT),
+        WARP_NODE(/*id*/ 0xF0, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x32, /*flags*/ WARP_NO_CHECKPOINT),
+        WARP_NODE(/*id*/ 0xF1, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x64, /*flags*/ WARP_NO_CHECKPOINT),
+        JUMP_LINK(script_func_local_area_2),
+        TERRAIN(/*terrainData*/ ccm_seg7_area_2_collision),
+        MACRO_OBJECTS(/*objList*/ ccm_seg7_area_2_macro_objs),
+        INSTANT_WARP(/*index*/ 2, /*destArea*/ 3, /*displace*/ 10240, 7168, 10240),
+        SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0000, /*seq*/ SEQ_LEVEL_GRASS),
+        TERRAIN_TYPE(/*terrainType*/ TERRAIN_SLIDE),
+    END_AREA(),
+
+    AREA(/*index*/ 3, ccm_geo_000BEC),
+        WARP_NODE(/*id*/ 0xF0, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x32, /*flags*/ WARP_NO_CHECKPOINT),
+        WARP_NODE(/*id*/ 0xF1, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x64, /*flags*/ WARP_NO_CHECKPOINT),
+        JUMP_LINK(script_func_local_area_3),
+        TERRAIN(/*terrainData*/ ccm_seg7_area_3_collision),
+        MACRO_OBJECTS(/*objList*/ ccm_seg7_area_3_macro_objs),
+        INSTANT_WARP(/*index*/ 3, /*destArea*/ 4, /*displace*/ -11264, 13312, 3072),
+        SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0000, /*seq*/ SEQ_LEVEL_GRASS),
+        TERRAIN_TYPE(/*terrainType*/ TERRAIN_SLIDE),
+    END_AREA(),
+
+    AREA(/*index*/ 4, ccm_geo_000C84),
+        OBJECT(/*model*/ MODEL_TTM_SLIDE_EXIT_PODIUM, /*pos*/ -7285, -1866, -4812, /*angle*/ 0, 0, 0, /*behParam*/ 0x000A0000, /*beh*/ bhvExitPodiumWarp),
+        WARP_NODE(/*id*/ 0x0A, /*destLevel*/ LEVEL_CCM, /*destArea*/ 0x01, /*destNode*/ 0x14, /*flags*/ WARP_NO_CHECKPOINT),
+        WARP_NODE(/*id*/ 0xF0, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x32, /*flags*/ WARP_NO_CHECKPOINT),
+        WARP_NODE(/*id*/ 0xF1, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x64, /*flags*/ WARP_NO_CHECKPOINT),
+        JUMP_LINK(script_func_local_area_4),
+        TERRAIN(/*terrainData*/ ccm_seg7_area_4_collision),
+        MACRO_OBJECTS(/*objList*/ ccm_seg7_area_4_macro_objs),
+        SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0000, /*seq*/ SEQ_LEVEL_GRASS),
+        TERRAIN_TYPE(/*terrainType*/ TERRAIN_SLIDE),
     END_AREA(),
 
     FREE_LEVEL_POOL(),

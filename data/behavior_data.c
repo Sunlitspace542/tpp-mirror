@@ -34,6 +34,7 @@
 #include "actors/group17.h"
 #include "levels/castle_inside/header.h"
 #include "levels/castle_grounds/header.h"
+#include "levels/ccm/header.h"
 #include "levels/lll/header.h"
 #include "levels/ddd/header.h"
 #include "levels/wf/header.h"
@@ -740,6 +741,7 @@ const BehaviorScript bhvExitPodiumWarp[] = {
     SET_INT(oInteractType, INTERACT_WARP),
     DROP_TO_FLOOR(),
     SET_FLOAT(oCollisionDistance, 8000),
+    LOAD_COLLISION_DATA(ccm_seg7_collision_podium_warp),
     SET_INT(oIntangibleTimer, 0),
     SET_HITBOX(/*Radius*/ 50, /*Height*/ 50),
     BEGIN_LOOP(),

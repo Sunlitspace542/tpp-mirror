@@ -1,5 +1,5 @@
-// 0x0E000B5C
-const GeoLayout ccm_geo_000B5C[] = {
+// 0x0E000BEC
+const GeoLayout ccm_geo_000BEC[] = {
    GEO_NODE_SCREEN_AREA(10, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, SCREEN_WIDTH/2, SCREEN_HEIGHT/2),
    GEO_OPEN_NODE(),
       GEO_ZBUFFER(0),
@@ -15,8 +15,9 @@ const GeoLayout ccm_geo_000B5C[] = {
          GEO_OPEN_NODE(),
             GEO_CAMERA(9, 0, 2000, 6000, 0, 0, 0, geo_camera_main),
             GEO_OPEN_NODE(),
-               GEO_DISPLAY_LIST(LAYER_OPAQUE, ccm_seg7_dl_0701D798),
-               GEO_DISPLAY_LIST(LAYER_OPAQUE, ccm_seg7_dl_0701DBB8),
+               GEO_DISPLAY_LIST(LAYER_OPAQUE, ccm_seg7_dl_070249A0),
+               GEO_DISPLAY_LIST(LAYER_OPAQUE, ccm_seg7_dl_07024C78),
+               GEO_DISPLAY_LIST(LAYER_OPAQUE, ccm_seg7_dl_07025F48),
                GEO_RENDER_OBJ(),
                GEO_ASM(0, geo_envfx_main),
             GEO_CLOSE_NODE(),

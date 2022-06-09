@@ -21,7 +21,7 @@ STUB_LEVEL("",                 LEVEL_UNKNOWN_1,        COURSE_NONE,             
 STUB_LEVEL("",                 LEVEL_UNKNOWN_2,        COURSE_NONE,                                 20000,    0x00, 0x00, 0x00, _,         _)
 STUB_LEVEL("",                 LEVEL_UNKNOWN_3,        COURSE_NONE,                                 20000,    0x00, 0x00, 0x00, _,         _)
 STUB_LEVEL("TERESA OBAKE",     LEVEL_BBH,              COURSE_BBH,                                  28000,    0x28, 0x28, 0x28, sDynBbh,   sCamBBH)
-DEFINE_LEVEL("YYAMA1 % YSLD1", LEVEL_CCM,              COURSE_CCM,      ccm,              snow,     17000,    0x10, 0x38, 0x38, _,         sCamCCM)
+DEFINE_LEVEL("YYAMA1 % YSLD1", LEVEL_CCM,              COURSE_CCM,      ccm,              snow,     17000,    0x10, 0x38, 0x38, _,         _)
 DEFINE_LEVEL("SELECT ROOM",    LEVEL_CASTLE,           COURSE_NONE,     castle_inside,    inside,   20000,    0x08, 0x08, 0x08, _,         sCamCastle)
 STUB_LEVEL("HORROR DUNGEON",   LEVEL_HMC,              COURSE_HMC,                                  16000,    0x28, 0x28, 0x28, sDynHmc,   sCamHMC)
 STUB_LEVEL("SABAKU % PYRMD",   LEVEL_SSL,              COURSE_SSL,                                  15000,    0x08, 0x30, 0x30, _,         sCamSSL)

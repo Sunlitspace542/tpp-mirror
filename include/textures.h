@@ -3,25 +3,6 @@
 
 #include <ultra64.h>
 
-// cave
-extern const u8 cave_09000000[];
-extern const u8 cave_09001000[];
-extern const u8 cave_09001800[];
-extern const u8 cave_09002800[];
-extern const u8 cave_09003000[];
-extern const u8 cave_09003800[];
-extern const u8 cave_09004800[];
-extern const u8 cave_09005800[];
-extern const u8 cave_09006800[];
-extern const u8 cave_09007000[];
-extern const u8 cave_09007800[];
-extern const u8 cave_09008800[];
-extern const u8 cave_09009800[];
-extern const u8 cave_0900A000[];
-extern const u8 cave_0900A800[];
-extern const u8 cave_0900B800[];
-extern const u8 cave_0900C000[];
-
 // fire
 extern const u8 fire_09000000[];
 extern const u8 fire_09000800[];
@@ -117,48 +98,6 @@ extern const u8 inside_0900A000[];
 extern const u8 inside_0900B000[];
 extern const u8 inside_0900B800[];
 
-// machine
-extern const u8 machine_09000000[];
-extern const u8 machine_09000800[];
-extern const u8 machine_09001000[];
-extern const u8 machine_09001800[];
-extern const u8 machine_09002000[];
-extern const u8 machine_09002800[];
-extern const u8 machine_09003000[];
-extern const u8 machine_09003800[];
-extern const u8 machine_09004000[];
-extern const u8 machine_09005000[];
-extern const u8 machine_09005800[];
-extern const u8 machine_09006000[];
-extern const u8 machine_09006800[];
-extern const u8 machine_09007000[];
-extern const u8 machine_09007800[];
-extern const u8 machine_09008000[];
-extern const u8 machine_09008400[];
-
-// mountain
-extern const u8 mountain_09000000[];
-extern const u8 mountain_09000800[];
-extern const u8 mountain_09001800[];
-extern const u8 mountain_09002800[];
-extern const u8 mountain_09003000[];
-extern const u8 mountain_09003800[];
-extern const u8 mountain_09004000[];
-extern const u8 mountain_09004800[];
-extern const u8 mountain_09005000[];
-extern const u8 mountain_09005800[];
-extern const u8 mountain_09006800[];
-extern const u8 mountain_09007000[];
-extern const u8 mountain_09007800[];
-extern const u8 mountain_09008000[];
-extern const u8 mountain_09008800[];
-extern const u8 mountain_09009800[];
-extern const u8 mountain_0900A000[];
-extern const u8 mountain_0900A800[];
-extern const u8 mountain_0900B000[];
-extern const u8 mountain_0900B800[];
-extern const u8 mountain_0900C000[];
-
 // outside
 extern const u8 outside_09000000[];
 extern const u8 outside_09000800[];
@@ -182,23 +121,6 @@ extern const u8 outside_0900B000[];
 extern const u8 outside_0900B400[];
 extern const u8 outside_0900BC00[];
 
-// sky
-extern const u8 sky_09000000[];
-extern const u8 sky_09000800[];
-extern const u8 sky_09001000[];
-extern const u8 sky_09001800[];
-extern const u8 sky_09002000[];
-extern const u8 sky_09003000[];
-extern const u8 sky_09003800[];
-extern const u8 sky_09004800[];
-extern const u8 sky_09005000[];
-extern const u8 sky_09005800[];
-extern const u8 sky_09006000[];
-extern const u8 texture_metal_hole[];
-extern const u8 sky_09007000[];
-extern const u8 sky_09007800[];
-extern const u8 sky_09008000[];
-
 // snow
 extern const u8 snow_09000000[];
 extern const u8 snow_09000800[];
@@ -218,26 +140,6 @@ extern const u8 snow_09008000[];
 extern const u8 snow_09008800[];
 extern const u8 snow_09009000[];
 extern const u8 snow_09009800[];
-
-// spooky
-extern const u8 spooky_09000000[];
-extern const u8 spooky_09000800[];
-extern const u8 spooky_09001000[];
-extern const u8 spooky_09001800[];
-extern const u8 spooky_09002800[];
-extern const u8 spooky_09003800[];
-extern const u8 spooky_09004800[];
-extern const u8 spooky_09005000[];
-extern const u8 spooky_09006000[];
-extern const u8 spooky_09006800[];
-extern const u8 spooky_09007000[];
-extern const u8 spooky_09008000[];
-extern const u8 spooky_09008800[];
-extern const u8 spooky_09009000[];
-extern const u8 spooky_0900A000[];
-extern const u8 spooky_0900A800[];
-extern const u8 spooky_0900B000[];
-extern const u8 spooky_0900B800[];
 
 // water
 extern const u8 water_09000000[];
