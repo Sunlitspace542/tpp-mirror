@@ -24,15 +24,8 @@
  */
 
 #define NUM_FLYING_CARPET_VERTICES 21
-extern s16 flying_carpet_static_vertex_data[NUM_FLYING_CARPET_VERTICES];
 
 extern Gfx dl_castle_lobby_wing_cap_light[];
-
-extern Gfx dl_flying_carpet_begin[];
-extern Gfx dl_flying_carpet_model_half[];
-extern Gfx dl_flying_carpet_end[];
-
-extern Gfx dl_cake_end_screen[];
 
 static s16 sCurAreaTimer = 1;
 static s16 sPrevAreaTimer = 0;
@@ -104,7 +97,7 @@ Gfx *geo_exec_flying_carpet_create(s32 callContext, struct GraphNode *node, UNUS
     Vtx *verts;
     struct GraphNodeGenerated *generatedNode = (struct GraphNodeGenerated *) node;
 
-    s16 *sp64 = segmented_to_virtual(&flying_carpet_static_vertex_data);
+    s16 *sp64 = segmented_to_virtual(NULL);
     Gfx *displayList = NULL;
     Gfx *displayListHead = NULL;
     struct Object *curGraphNodeObject;
@@ -133,17 +126,17 @@ Gfx *geo_exec_flying_carpet_create(s32 callContext, struct GraphNode *node, UNUS
             make_vertex(verts, n, x, y, z, tx, ty, 0, 127, 0, 255);
         }
 
-        gSPDisplayList(displayListHead++, dl_flying_carpet_begin);
+        gSPDisplayList(displayListHead++, NULL);
 
         // The forward half.
         gSPVertex(displayListHead++, verts, 12, 0);
-        gSPDisplayList(displayListHead++, dl_flying_carpet_model_half);
+        gSPDisplayList(displayListHead++, NULL);
 
         // The back half.
         gSPVertex(displayListHead++, verts + 9, 12, 0);
-        gSPDisplayList(displayListHead++, dl_flying_carpet_model_half);
+        gSPDisplayList(displayListHead++, NULL);
 
-        gSPDisplayList(displayListHead++, dl_flying_carpet_end);
+        gSPDisplayList(displayListHead++, NULL);
         gSPEndDisplayList(displayListHead);
 
         curGraphNodeObject = (struct Object *) gCurGraphNodeObject;
@@ -159,13 +152,6 @@ Gfx *geo_exec_flying_carpet_create(s32 callContext, struct GraphNode *node, UNUS
     return displayList;
 }
 
-#ifdef VERSION_EU
-// TODO: Symbolize these
-extern Gfx dl_cake_end_screen_eu_070296F8[];
-extern Gfx dl_cake_end_screen_eu_07029768[];
-extern Gfx dl_cake_end_screen_eu_070297D8[];
-#endif
-
 /**
  * Create a display list for the end screen with Peach's delicious cake.
  */
@@ -179,26 +165,8 @@ Gfx *geo_exec_cake_end_screen(s32 callContext, struct GraphNode *node, UNUSED f3
         displayListHead = displayList;
 
         generatedNode->fnNode.node.flags = (generatedNode->fnNode.node.flags & 0xFF) | 0x100;
-#ifdef VERSION_EU
-        gSPDisplayList(displayListHead++, dl_cake_end_screen);
-#else
         gSPDisplayList(displayListHead++, dl_proj_mtx_fullscreen);
-#endif
-#ifdef VERSION_EU
-        switch (eu_get_language()) {
-            case LANGUAGE_ENGLISH:
-                gSPDisplayList(displayListHead++, dl_cake_end_screen_eu_070296F8);
-                break;
-            case LANGUAGE_FRENCH:
-                gSPDisplayList(displayListHead++, dl_cake_end_screen_eu_07029768);
-                break;
-            case LANGUAGE_GERMAN:
-                gSPDisplayList(displayListHead++, dl_cake_end_screen_eu_070297D8);
-                break;
-        }
-#else
-        gSPDisplayList(displayListHead++, dl_cake_end_screen);
-#endif
+        gSPDisplayList(displayListHead++, NULL);
         gSPEndDisplayList(displayListHead);
     }
 

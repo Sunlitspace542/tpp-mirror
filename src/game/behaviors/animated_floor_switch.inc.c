@@ -7,25 +7,25 @@ struct Struct80331A54 {
 
 struct Struct80331A54 D_80331A54[][5] = {
     {
-        { bits_seg7_collision_0701B734, MODEL_BITS_STAIRCASE_FRAME4 },
-        { bits_seg7_collision_0701B59C, MODEL_BITS_STAIRCASE_FRAME3 },
-        { bits_seg7_collision_0701B404, MODEL_BITS_STAIRCASE_FRAME2 },
-        { bits_seg7_collision_0701B26C, MODEL_BITS_STAIRCASE_FRAME1 },
-        { bits_seg7_collision_0701B0D4, MODEL_BITS_STAIRCASE },
+        { NULL, MODEL_BITS_STAIRCASE_FRAME4 },
+        { NULL, MODEL_BITS_STAIRCASE_FRAME3 },
+        { NULL, MODEL_BITS_STAIRCASE_FRAME2 },
+        { NULL, MODEL_BITS_STAIRCASE_FRAME1 },
+        { NULL, MODEL_BITS_STAIRCASE },
     },
     {
-        { bitdw_seg7_collision_0700FD9C, MODEL_BITDW_STAIRCASE },
-        { bitdw_seg7_collision_0700FC7C, MODEL_BITDW_STAIRCASE_FRAME1 },
-        { bitdw_seg7_collision_0700FB5C, MODEL_BITDW_STAIRCASE_FRAME2 },
-        { bitdw_seg7_collision_0700FA3C, MODEL_BITDW_STAIRCASE_FRAME3 },
-        { bitdw_seg7_collision_0700F91C, MODEL_BITDW_STAIRCASE_FRAME4 },
+        { NULL, MODEL_BITDW_STAIRCASE },
+        { NULL, MODEL_BITDW_STAIRCASE_FRAME1 },
+        { NULL, MODEL_BITDW_STAIRCASE_FRAME2 },
+        { NULL, MODEL_BITDW_STAIRCASE_FRAME3 },
+        { NULL, MODEL_BITDW_STAIRCASE_FRAME4 },
     },
     {
-        { rr_seg7_collision_0702A6B4, MODEL_RR_TRICKY_TRIANGLES_FRAME4 },
-        { rr_seg7_collision_0702A32C, MODEL_RR_TRICKY_TRIANGLES_FRAME3 },
-        { rr_seg7_collision_07029FA4, MODEL_RR_TRICKY_TRIANGLES_FRAME2 },
-        { rr_seg7_collision_07029C1C, MODEL_RR_TRICKY_TRIANGLES_FRAME1 },
-        { rr_seg7_collision_07029924, MODEL_RR_TRICKY_TRIANGLES },
+        { NULL, MODEL_RR_TRICKY_TRIANGLES_FRAME4 },
+        { NULL, MODEL_RR_TRICKY_TRIANGLES_FRAME3 },
+        { NULL, MODEL_RR_TRICKY_TRIANGLES_FRAME2 },
+        { NULL, MODEL_RR_TRICKY_TRIANGLES_FRAME1 },
+        { NULL, MODEL_RR_TRICKY_TRIANGLES },
     },
 };
 

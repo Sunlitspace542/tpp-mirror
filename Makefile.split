@@ -32,7 +32,7 @@ ACTOR_GROUPS := \
     common1
 
 LEVEL_FILES := $(addsuffix leveldata,$(LEVEL_DIRS))
-MIO0_FILES := $(addprefix $(MIO0_DIR)/,$(addsuffix .szp,$(SEGMENTS))) $(addprefix $(BUILD_DIR)/actors/,$(addsuffix .szp,$(ACTOR_GROUPS))) $(addprefix $(BUILD_DIR)/levels/,$(addsuffix .szp,$(LEVEL_FILES)))
+MIO0_FILES := $(addprefix $(MIO0_DIR)/,$(addsuffix .szp,$(SEGMENTS)))
 MIO0_OBJ_FILES := $(MIO0_FILES:.szp=.szp.o)
 
 SEGMENT_ELF_FILES := $(addprefix $(BUILD_DIR)/bin/,$(addsuffix .elf,$(SEGMENTS)))
@@ -193,18 +193,13 @@ GRASS_FILES                  := $(patsubst %.png,%.inc.c,$(wildcard $(TEXTURE_DI
 # Texture Files
 $(BUILD_DIR)/bin/segment2.o: $(addprefix $(BUILD_DIR)/,$(SEGMENT2_FILES))
 $(BUILD_DIR)/bin/title_screen_bg.o: $(addprefix $(BUILD_DIR)/,$(TITLE_SCREEN_BG_FILES))
-$(BUILD_DIR)/bin/spooky.o: $(addprefix $(BUILD_DIR)/,$(SPOOKY_FILES))
 $(BUILD_DIR)/bin/generic.o: $(addprefix $(BUILD_DIR)/,$(GENERIC_FILES))
 $(BUILD_DIR)/bin/outside.o: $(addprefix $(BUILD_DIR)/,$(OUTSIDE_FILES))
 $(BUILD_DIR)/bin/snow.o: $(addprefix $(BUILD_DIR)/,$(SNOW_FILES))
 $(BUILD_DIR)/bin/effect.o: $(addprefix $(BUILD_DIR)/,$(EFFECT_FILES))
-$(BUILD_DIR)/bin/cave.o: $(addprefix $(BUILD_DIR)/,$(CAVE_FILES))
 $(BUILD_DIR)/bin/inside.o: $(addprefix $(BUILD_DIR)/,$(INSIDE_FILES))
 $(BUILD_DIR)/bin/water.o: $(addprefix $(BUILD_DIR)/,$(WATER_FILES))
 $(BUILD_DIR)/bin/fire.o: $(addprefix $(BUILD_DIR)/,$(FIRE_TEXTURES_FILES))
-$(BUILD_DIR)/bin/sky.o: $(addprefix $(BUILD_DIR)/,$(SKY_FILES))
-$(BUILD_DIR)/bin/machine.o: $(addprefix $(BUILD_DIR)/,$(MACHINE_FILES))
-$(BUILD_DIR)/bin/mountain.o: $(addprefix $(BUILD_DIR)/,$(MOUNTAIN_FILES))
 $(BUILD_DIR)/bin/grass.o: $(addprefix $(BUILD_DIR)/,$(GRASS_FILES))
 
 # Others
@@ -212,17 +207,12 @@ $(BUILD_DIR)/bin/segment2.elf: SEGMENT_ADDRESS := 0x02000000
 $(BUILD_DIR)/bin/title_screen_bg.elf: SEGMENT_ADDRESS := 0x0A000000
 $(BUILD_DIR)/bin/debug_level_select.elf: SEGMENT_ADDRESS := 0x07000000
 $(BUILD_DIR)/bin/effect.elf: SEGMENT_ADDRESS := 0x0B000000
-$(BUILD_DIR)/bin/spooky.elf: SEGMENT_ADDRESS := 0x09000000
 $(BUILD_DIR)/bin/generic.elf: SEGMENT_ADDRESS := 0x09000000
 $(BUILD_DIR)/bin/outside.elf: SEGMENT_ADDRESS := 0x09000000
 $(BUILD_DIR)/bin/snow.elf: SEGMENT_ADDRESS := 0x09000000
-$(BUILD_DIR)/bin/cave.elf: SEGMENT_ADDRESS := 0x09000000
 $(BUILD_DIR)/bin/inside.elf: SEGMENT_ADDRESS := 0x09000000
 $(BUILD_DIR)/bin/water.elf: SEGMENT_ADDRESS := 0x09000000
 $(BUILD_DIR)/bin/fire.elf: SEGMENT_ADDRESS := 0x09000000
-$(BUILD_DIR)/bin/sky.elf: SEGMENT_ADDRESS := 0x09000000
-$(BUILD_DIR)/bin/machine.elf: SEGMENT_ADDRESS := 0x09000000
-$(BUILD_DIR)/bin/mountain.elf: SEGMENT_ADDRESS := 0x09000000
 $(BUILD_DIR)/bin/grass.elf: SEGMENT_ADDRESS := 0x09000000
 
 # EU segment 19 translations

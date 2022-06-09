@@ -1,10 +1,9 @@
 // rotating_platform.c.inc
 
 #include "levels/wf/header.h"
-#include "levels/wdw/header.h"
 
 struct WFRotatingPlatformData sWFRotatingPlatformData[] = {
-    { 0, 100, wf_seg7_collision_rotating_platform, 2000 }, { 0, 150, wdw_seg7_collision_070186B4, 1000 }
+    { 0, 100, wf_seg7_collision_rotating_platform, 2000 }, { 0, 150, NULL, 1000 }
 };
 
 void bhv_wf_rotating_wooden_platform_loop(void) {

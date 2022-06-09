@@ -10,8 +10,8 @@
  * Collision models for the different sized treadmills.
  */
 static void *sTTCTreadmillCollisionModels[] = {
-    ttc_seg7_collision_070152B4,
-    ttc_seg7_collision_070153E0,
+    NULL,
+    NULL,
 };
 
 static s16 sTTCTreadmillSpeeds[] = {
@@ -21,14 +21,11 @@ static s16 sTTCTreadmillSpeeds[] = {
     /* TTC_SPEED_STOPPED */ 0,
 };
 
-extern s16 ttc_movtex_tris_big_surface_treadmill[];
-extern s16 ttc_movtex_tris_small_surface_treadmill[];
-
 void bhv_ttc_treadmill_init(void) {
     o->collisionData = segmented_to_virtual(sTTCTreadmillCollisionModels[o->oBehParams2ndByte & 0x1]);
 
-    o->oTTCTreadmillBigSurface = segmented_to_virtual(ttc_movtex_tris_big_surface_treadmill);
-    o->oTTCTreadmillSmallSurface = segmented_to_virtual(ttc_movtex_tris_small_surface_treadmill);
+    o->oTTCTreadmillBigSurface = segmented_to_virtual(NULL);
+    o->oTTCTreadmillSmallSurface = segmented_to_virtual(NULL);
 
     *o->oTTCTreadmillBigSurface = *o->oTTCTreadmillSmallSurface = sTTCTreadmillSpeeds[gTTCSpeedSetting];
 

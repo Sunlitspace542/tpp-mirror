@@ -40,7 +40,7 @@ OUTPUT_ARCH (mips)
 #define STANDARD_LEVEL(name) \
    BEGIN_SEG(name##_segment_7, 0x07000000) \
    { \
-      BUILD_DIR/levels/name/leveldata.szp.o(.data); \
+      BUILD_DIR/levels/name/leveldata.o(.data); \
       . = ALIGN(0x10); \
    } \
    END_SEG(name##_segment_7) \
@@ -54,7 +54,7 @@ OUTPUT_ARCH (mips)
 #define STANDARD_OBJECTS(name, segAddr, geoAddr) \
    BEGIN_SEG(name##_mio0, segAddr) \
    { \
-      BUILD_DIR/actors/name.szp.o(.data); \
+      BUILD_DIR/actors/name.o(.data); \
       . = ALIGN(0x10); \
    } \
    END_SEG(name##_mio0) \
@@ -911,7 +911,7 @@ SECTIONS
    END_SEG(intro)
    BEGIN_SEG(intro_segment_7, 0x07000000)
    {
-      BUILD_DIR/levels/intro/leveldata.szp.o(.data);
+      BUILD_DIR/levels/intro/leveldata.o(.data);
       . = ALIGN(0x10);
    }
    END_SEG(intro_segment_7)
@@ -952,7 +952,7 @@ SECTIONS
    END_SEG(menu)
    BEGIN_SEG(menu_segment_7, 0x07000000)
    {
-      BUILD_DIR/levels/menu/leveldata.szp.o(.data);
+      BUILD_DIR/levels/menu/leveldata.o(.data);
       . = ALIGN(0x10);
    }
    END_SEG(menu_segment_7)
@@ -965,25 +965,16 @@ SECTIONS
 
    MIO0_SEG(water_skybox, 0x0A000000)
    MIO0_SEG(ccm_skybox, 0x0A000000)
-   MIO0_SEG(clouds_skybox, 0x0A000000)
    MIO0_SEG(bitfs_skybox, 0x0A000000)
    MIO0_SEG(wdw_skybox, 0x0A000000)
    MIO0_SEG(cloud_floor_skybox, 0x0A000000)
-   MIO0_SEG(ssl_skybox, 0x0A000000)
-   MIO0_SEG(bbh_skybox, 0x0A000000)
    MIO0_SEG(bidw_skybox, 0x0A000000)
-   MIO0_SEG(bits_skybox, 0x0A000000)
 
    // Texture bins
    MIO0_SEG(fire, 0x09000000)
-   MIO0_SEG(spooky, 0x09000000)
    MIO0_SEG(generic, 0x09000000)
    MIO0_SEG(water, 0x09000000)
-   MIO0_SEG(sky, 0x09000000)
    MIO0_SEG(snow, 0x09000000)
-   MIO0_SEG(cave, 0x09000000)
-   MIO0_SEG(machine, 0x09000000)
-   MIO0_SEG(mountain, 0x09000000)
    MIO0_SEG(grass, 0x09000000)
    MIO0_SEG(outside, 0x09000000)
    MIO0_SEG(inside, 0x09000000)

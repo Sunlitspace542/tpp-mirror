@@ -5,10 +5,6 @@
 #include "object_helpers.h"
 #include "engine/surface_collision.h"
 
-extern u8 bob_seg7_metal_ball_path0[];
-extern u8 ttm_seg7_trajectory_070170A0[];
-extern u8 bob_seg7_metal_ball_path1[];
-
 void set_yoshi_as_not_dead(void);
 
 s32 coin_step(s16 *collisionFlagsPtr);

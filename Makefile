@@ -459,7 +459,12 @@ $(BUILD_DIR)/actors/%.bin: $(BUILD_DIR)/actors/%.elf
 $(BUILD_DIR)/levels/%/leveldata.bin: $(BUILD_DIR)/levels/%/leveldata.elf
 	$(EXTRACT_DATA_FOR_MIO) $< $@
 
-$(BUILD_DIR)/%.szp.o: $(BUILD_DIR)/%.bin
+# Compress binary file
+$(BUILD_DIR)/%.szp: $(BUILD_DIR)/%.bin
+	$(MIO0TOOL) $< $@
+
+# convert binary mio0 to object file
+$(BUILD_DIR)/%.szp.o: $(BUILD_DIR)/%.szp
 	$(LD) -r -b binary $< -o $@
 
 $(BUILD_DIR)/%.table: %.aiff

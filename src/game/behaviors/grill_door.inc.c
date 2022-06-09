@@ -1,9 +1,7 @@
 // grill_door.c.inc
 
-extern u8 bob_seg7_collision_gate[];
-extern u8 hmc_seg7_collision_0702B65C[];
-struct Struct8032FCE8 D_8032FCE8[] = { { 320, MODEL_BOB_BARS_GRILLS, bob_seg7_collision_gate },
-                                       { 410, MODEL_HMC_RED_GRILLS, hmc_seg7_collision_0702B65C } };
+struct Struct8032FCE8 D_8032FCE8[] = { { 320, MODEL_BOB_BARS_GRILLS, NULL },
+                                       { 410, MODEL_HMC_RED_GRILLS, NULL } };
 
 void bhv_openable_cage_door_loop(void) {
     if (gCurrentObject->oAction == 0) {

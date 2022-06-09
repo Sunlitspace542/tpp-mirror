@@ -999,27 +999,17 @@ struct SoundState D_8032F5B8[] = { { 0, 0, 0, NO_SOUND },
                                    { 1, 0, -1, SOUND_OBJ2_BOWSER_ROAR } };
 s8 D_8032F690[4] = { 0, 0, 1, 0 };
 s8 D_8032F694[4] = { 1, 1, 3, 0 };
-extern u8 bowser_3_seg7_collision_07004B94[];
-extern u8 bowser_3_seg7_collision_07004C18[];
-extern u8 bowser_3_seg7_collision_07004C9C[];
-extern u8 bowser_3_seg7_collision_07004D20[];
-extern u8 bowser_3_seg7_collision_07004DA4[];
-extern u8 bowser_3_seg7_collision_07004E28[];
-extern u8 bowser_3_seg7_collision_07004EAC[];
-extern u8 bowser_3_seg7_collision_07004F30[];
-extern u8 bowser_3_seg7_collision_07004FB4[];
-extern u8 bowser_3_seg7_collision_07005038[];
 struct Struct8032F698 D_8032F698[] = { { NULL, 0, 0, 0, 0 },
-                                       { bowser_3_seg7_collision_07004B94, -800, -1000, -20992, 0 },
-                                       { bowser_3_seg7_collision_07004C18, -1158, 390, -18432, 0 },
-                                       { bowser_3_seg7_collision_07004C9C, -1158, 390, -7680, 0 },
-                                       { bowser_3_seg7_collision_07004D20, 0, 1240, -6144, 0 },
-                                       { bowser_3_seg7_collision_07004DA4, 0, 1240, 6144, 0 },
-                                       { bowser_3_seg7_collision_07004E28, 1158, 390, 7680, 0 },
-                                       { bowser_3_seg7_collision_07004EAC, 1158, 390, 18432, 0 },
-                                       { bowser_3_seg7_collision_07004F30, 800, -1000, 20992, 0 },
-                                       { bowser_3_seg7_collision_07004FB4, 800, -1000, -31744, 0 },
-                                       { bowser_3_seg7_collision_07005038, -800, -1000, 31744, 0 } };
+                                       { NULL, -800, -1000, -20992, 0 },
+                                       { NULL, -1158, 390, -18432, 0 },
+                                       { NULL, -1158, 390, -7680, 0 },
+                                       { NULL, 0, 1240, -6144, 0 },
+                                       { NULL, 0, 1240, 6144, 0 },
+                                       { NULL, 1158, 390, 7680, 0 },
+                                       { NULL, 1158, 390, 18432, 0 },
+                                       { NULL, 800, -1000, 20992, 0 },
+                                       { NULL, 800, -1000, -31744, 0 },
+                                       { NULL, -800, -1000, 31744, 0 } };
 
 void bowser_free_update(void) {
     struct Surface *floor;
