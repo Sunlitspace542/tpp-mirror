@@ -77,24 +77,25 @@ s8 gameOverBackgroundTable[] = {
 s8 gameOverBackgroundFlipOrder[] = { 0x00, 0x01, 0x02, 0x03, 0x07, 0x0B,
                                      0x0a, 0x09, 0x08, 0x04, 0x05, 0x06 };
 
-Gfx *geo_title_screen(s32 sp50, struct GraphNode *sp54, UNUSED void *context) {
+Gfx *geo_title_screen(s32 sp50, UNUSED struct GraphNode *sp54, UNUSED void *context) {
     struct GraphNode *graphNode; // sp4c
     Gfx *displayList;            // sp48
     Gfx *displayListIter;        // sp44
+    Mtx *scaleMat;               // sp40
     graphNode = sp54;
     displayList = NULL;
     displayListIter = NULL;
-
     if (sp50 == 1) {
-        displayList = alloc_display_list(2 * sizeof(*displayList));
-        displayListIter = displayList;
-
         graphNode->flags = (graphNode->flags & 0xFF) | 0x100;
-
+        scaleMat = alloc_display_list(sizeof(*scaleMat));
+        displayList = alloc_display_list(4 * sizeof(*displayList));
+        displayListIter = displayList;
+        guScale(scaleMat, 1.0f, 1.0f, 0.0f);
+        gSPMatrix(displayListIter++, scaleMat, G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
         gSPDisplayList(displayListIter++, &nintendo_logo_dl_mesh);
+        gSPPopMatrix(displayListIter++, G_MTX_MODELVIEW);
         gSPEndDisplayList(displayListIter);
     }
-
     return displayList;
 }
 
