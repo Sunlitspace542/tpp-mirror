@@ -85,14 +85,14 @@ Gfx *geo_title_screen(s32 sp50, UNUSED struct GraphNode *sp54, UNUSED void *cont
     graphNode = sp54;
     displayList = NULL;
     displayListIter = NULL;
-	if (sp50 == 1) {
+    if (sp50 == 1) {
         graphNode->flags = (graphNode->flags & 0xFF) | 0x100;
         scaleMat = alloc_display_list(sizeof(*scaleMat));
         displayList = alloc_display_list(4 * sizeof(*displayList));
         displayListIter = displayList;
-		guScale(scaleMat, 1.0f, 1.0f, 0.0f);
+        guScale(scaleMat, 1.0f, 1.0f, 0.0f);
         gSPMatrix(displayListIter++, scaleMat, G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
-		gSPDisplayList(displayListIter++, &nintendo_logo_dl_mesh);
+        gSPDisplayList(displayListIter++, &nintendo_logo_dl_mesh);
         gSPPopMatrix(displayListIter++, G_MTX_MODELVIEW);
         gSPEndDisplayList(displayListIter);
     }
