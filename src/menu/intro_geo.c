@@ -108,7 +108,7 @@ Gfx *intro_backdrop_one_image(s32 index, s8 *backgroundTable) {
     mtx = alloc_display_list(sizeof(*mtx));
     displayList = alloc_display_list(36 * sizeof(*displayList));
     displayListIter = displayList;
-	vIntroBgTable = segmented_to_virtual(mario_title_texture_table);
+    vIntroBgTable = segmented_to_virtual(mario_title_texture_table);
     guTranslate(mtx, introBackgroundOffsetX[index], introBackgroundOffsetY[index], 0.0f);
     gSPMatrix(displayListIter++, mtx, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_PUSH);
     gSPDisplayList(displayListIter++, &title_screen_bg_dl_0A000118);
