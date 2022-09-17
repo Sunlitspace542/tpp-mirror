@@ -217,7 +217,7 @@ s32 act_climbing_pole(struct MarioState *m) {
     if (set_pole_position(m, 0.0f) == POLE_NONE) {
         sp24 = m->controller->stickY / 4.0f * 0x10000;
         set_mario_anim_with_accel(m, MARIO_ANIM_CLIMB_UP_POLE, sp24);
-        add_tree_leaf_particles(m);
+        //add_tree_leaf_particles(m);
         play_climbing_sounds(m, 1);
     }
 
@@ -232,7 +232,7 @@ s32 act_grab_pole_slow(struct MarioState *m) {
         if (is_anim_at_end(m)) {
             set_mario_action(m, ACT_HOLDING_POLE, 0);
         }
-        add_tree_leaf_particles(m);
+        //add_tree_leaf_particles(m);
     }
 
     return FALSE;
@@ -255,7 +255,7 @@ s32 act_grab_pole_fast(struct MarioState *m) {
                 set_mario_action(m, ACT_HOLDING_POLE, 0);
             }
         }
-        add_tree_leaf_particles(m);
+        //add_tree_leaf_particles(m);
     }
 
     return FALSE;
@@ -731,14 +731,16 @@ s32 act_in_cannon(struct MarioState *m) {
 
             m->faceAngle[1] = marioObj->oMarioCannonObjectYaw + marioObj->oMarioCannonInputYaw;
             if (m->input & INPUT_A_PRESSED) {
-                m->forwardVel = 100.0f * coss(m->faceAngle[0]);
+                m->forwardVel = 80.0f * coss(m->faceAngle[0]);
 
-                m->vel[1] = 120.0f * sins(m->faceAngle[0]);
+                m->vel[1] = 80.0f * sins(m->faceAngle[0]);
 
-                m->pos[0] += 120.0f * coss(m->faceAngle[0]) * sins(m->faceAngle[1]);
-                m->pos[1] += 120.0f * sins(m->faceAngle[0]);
-                m->pos[2] += 120.0f * coss(m->faceAngle[0]) * coss(m->faceAngle[1]);
+                m->pos[0] += 80.0f * coss(m->faceAngle[0]) * sins(m->faceAngle[1]);
+                m->pos[1] += 80.0f * sins(m->faceAngle[0]);
+                m->pos[2] += 80.0f * coss(m->faceAngle[0]) * coss(m->faceAngle[1]);
 
+                play_sound(SOUND_OBJ_POUNDING_CANNON, m->marioObj->header.gfx.cameraToObject);
+                
                 m->marioObj->header.gfx.node.flags |= GRAPH_RENDER_ACTIVE;
 
                 set_mario_action(m, ACT_SHOT_FROM_CANNON, 0);

@@ -81,7 +81,7 @@ const LevelScript level_ccm_entry[] = {
     AREA(/*index*/ 1, snow_slider_geo),
         OBJECT(/*model*/ MODEL_NONE, /*pos*/  1671,  6902, -1756, /*angle*/ 0,   0, 0, /*behParam*/ 0x000A0000, /*beh*/ bhvWarps74),
         OBJECT(/*model*/ MODEL_NONE, /*pos*/  7815, -2649,  4493, /*angle*/ 0,   0, 0, /*behParam*/ 0x00140000, /*beh*/ bhvWarp),
-        OBJECT(/*model*/ MODEL_NONE, /*pos*/  2696,  5284,  -316, /*angle*/ 0, -90, 0, /*behParam*/ 0x0F1E0000, /*beh*/ bhvWarp),
+        OBJECT(/*model*/ MODEL_NONE, /*pos*/  2696,  5190,  -316, /*angle*/ 0, -90, 0, /*behParam*/ 0x0F1E0000, /*beh*/ bhvWarp),
         WARP_NODE(/*id*/ 0x0A, /*destLevel*/ LEVEL_CCM, /*destArea*/ 0x01, /*destNode*/ 0x0A, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ 0x14, /*destLevel*/ LEVEL_CCM, /*destArea*/ 0x01, /*destNode*/ 0x14, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ 0x1E, /*destLevel*/ LEVEL_CCM, /*destArea*/ 0x02, /*destNode*/ 0x0A, /*flags*/ WARP_NO_CHECKPOINT),

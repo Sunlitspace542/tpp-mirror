@@ -35,16 +35,19 @@ void bhv_bowser_bomb_explosion_loop(void) {
 }
 
 void bhv_bowser_bomb_smoke_loop(void) {
-    cur_obj_scale((f32) o->oTimer / 14.0f * 9.0 + 1.0);
     if (o->oTimer % 2 == 0)
         o->oAnimState++;
 
-    o->oOpacity -= 10;
-    if (o->oOpacity < 10)
-        o->oOpacity = 0;
-
     o->oPosY += o->oVelY;
 
-    if (o->oTimer == 28)
+    if (o->oTimer < 25)
+        cur_obj_scale((f32) o->oTimer / 14.0f * 9.0 + 1.0);
+
+    if (o->oTimer == 28) {
+       o->oPosY = o->oPosY;
+       o->oVelY = 0.0f;
+    } 
+
+    if (o->oTimer == 45)
         o->activeFlags = 0;
 }

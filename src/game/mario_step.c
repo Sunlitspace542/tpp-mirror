@@ -532,7 +532,6 @@ void apply_gravity(struct MarioState *m) {
     if (m->action == ACT_TWIRLING && m->vel[1] < 0.0f) {
         apply_twirl_gravity(m);
     } else if (m->action == ACT_SHOT_FROM_CANNON) {
-        m->vel[1] -= 3.2f;
         if (m->vel[1] < -75.0f) {
             m->vel[1] = -75.0f;
         }

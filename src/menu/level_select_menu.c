@@ -146,8 +146,8 @@ int intro_default(void) {
     /*
         if(gPlayer1Controller->buttonDown == QUIT_LEVEL_SELECT_COMBO) gDebugLevelSelect = 1;
                                                                  else gDebugLevelSelect = 0;
+    
     */
-
     if (gPlayer1Controller->buttonPressed & START_BUTTON) {
         play_sound(SOUND_MENU_STAR_SOUND, gDefaultSoundArgs);
         sp1C = 100 + gDebugLevelSelect;

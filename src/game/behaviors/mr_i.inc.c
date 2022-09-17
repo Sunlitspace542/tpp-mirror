@@ -43,7 +43,7 @@ void spawn_mr_i_particle(void) {
     particle->oPosY += 50.0f * sp18;
     particle->oPosX += sins(o->oMoveAngleYaw) * 90.0f * sp18;
     particle->oPosZ += coss(o->oMoveAngleYaw) * 90.0f * sp18;
-    cur_obj_play_sound_2(SOUND_OBJ_MRI_SHOOT);
+    cur_obj_play_sound_2(SOUND_OBJ_MIPS_RABBIT);
 }
 
 void bhv_mr_i_body_loop(void) {

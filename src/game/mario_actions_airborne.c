@@ -1320,8 +1320,13 @@ s32 act_air_hit_wall(struct MarioState *m) {
 
 s32 act_forward_rollout(struct MarioState *m) {
     if (m->actionState == 0) {
-        m->vel[1] = 15.0f;
-        m->actionState = 1;
+        if (m->intendedMag > 0) {
+            m->vel[1] = 30.0f;
+            m->actionState = 1;
+        } else {
+            m->vel[1] = 15.0f;
+            m->actionState = 1;
+        }
     }
 
     play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, 0);
@@ -1361,8 +1366,13 @@ s32 act_forward_rollout(struct MarioState *m) {
 
 s32 act_backward_rollout(struct MarioState *m) {
     if (m->actionState == 0) {
-        m->vel[1] = 15.0f;
-        m->actionState = 1;
+        if (m->intendedMag > 0) {
+            m->vel[1] = 30.0f;
+            m->actionState = 1;
+        } else {
+            m->vel[1] = 15.0f;
+            m->actionState = 1;
+        }
     }
 
     play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, 0);
@@ -1634,6 +1644,8 @@ s32 act_shot_from_cannon(struct MarioState *m) {
 
     mario_set_forward_vel(m, m->forwardVel);
 
+    m->actionTimer++;
+
     play_sound_if_no_flag(m, SOUND_MARIO_YAHOO, MARIO_MARIO_SOUND_PLAYED);
 
     switch (perform_air_step(m, 0)) {
@@ -1669,7 +1681,9 @@ s32 act_shot_from_cannon(struct MarioState *m) {
             break;
     }
 
-    if (m->vel[1] < -10.0f) {
+    m->vel[1] -= 1.15f;
+
+    if (m->actionTimer == 45) {
         set_mario_action(m, ACT_FLYING, 0);
     }
 

@@ -138,10 +138,8 @@ void hoot_surface_collision(f32 xPrev, UNUSED f32 yPrev, f32 zPrev) {
     hitbox.radius = 50.0;
 
     if (find_wall_collisions(&hitbox) != 0) {
-        o->oPosX = hitbox.x;
-        o->oPosY = hitbox.y;
-        o->oPosZ = hitbox.z;
-        gMarioObject->oInteractStatus |= INT_STATUS_MARIO_UNK7; /* bit 7 */
+        o->oPosX = xPrev;
+        o->oPosZ = zPrev;
     }
 
     floorY = find_floor_height_and_data(o->oPosX, o->oPosY, o->oPosZ, &sp44);

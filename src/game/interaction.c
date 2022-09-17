@@ -468,11 +468,8 @@ u32 bully_knock_back_mario(struct MarioState *mario) {
     init_bully_collision_data(&bullyData, bully->oPosX, bully->oPosZ, bully->oForwardVel,
                               bully->oMoveAngleYaw, marioToBullyRatio, bully->hitboxRadius + 2.0f);
 
-    if (mario->forwardVel != 0.0f) {
-        transfer_bully_speed(&marioData, &bullyData);
-    } else {
-        transfer_bully_speed(&bullyData, &marioData);
-    }
+    transfer_bully_speed(&marioData, &bullyData);
+
 
     newMarioYaw = atan2s(marioData.velZ, marioData.velX);
     newBullyYaw = atan2s(bullyData.velZ, bullyData.velX);
@@ -484,11 +481,6 @@ u32 bully_knock_back_mario(struct MarioState *mario) {
     mario->forwardVel = sqrtf(marioData.velX * marioData.velX + marioData.velZ * marioData.velZ);
     mario->pos[0] = marioData.posX;
     mario->pos[2] = marioData.posZ;
-
-    bully->oMoveAngleYaw = newBullyYaw;
-    bully->oForwardVel = sqrtf(bullyData.velX * bullyData.velX + bullyData.velZ * bullyData.velZ);
-    bully->oPosX = bullyData.posX;
-    bully->oPosZ = bullyData.posZ;
 
     if (marioDYaw < -0x4000 || marioDYaw > 0x4000) {
         mario->faceAngle[1] += 0x8000;
@@ -864,10 +856,12 @@ u32 interact_warp(struct MarioState *m, UNUSED u32 interactType, struct Object *
                 queue_rumble_data(12, 80);
             }
 #else
-            play_sound(o->collisionData == segmented_to_virtual(warp_pipe_seg3_collision_03009AC8)
-                           ? SOUND_MENU_ENTER_PIPE
-                           : SOUND_MENU_ENTER_HOLE,
-                       m->marioObj->header.gfx.cameraToObject);
+            if (gCurrLevelNum != LEVEL_CASTLE) {    
+                play_sound(o->collisionData == segmented_to_virtual(warp_pipe_seg3_collision_03009AC8)
+                               ? SOUND_MENU_ENTER_PIPE
+                               : SOUND_MENU_ENTER_HOLE,
+                           m->marioObj->header.gfx.cameraToObject);
+            }
 #endif
 
             mario_stop_riding_object(m);
@@ -1188,16 +1182,21 @@ u32 interact_bully(struct MarioState *m, UNUSED u32 interactType, struct Object 
 
     else if (!sInvulnerable && !(m->flags & MARIO_VANISH_CAP)
              && !(o->oInteractionSubtype & INT_SUBTYPE_DELAY_INVINCIBILITY)) {
-        o->oInteractStatus = INT_STATUS_INTERACTED;
-        m->invincTimer = 2;
-
-        update_mario_sound_and_camera(m);
-
-        push_mario_out_of_object(m, o, 5.0f);
-        drop_and_set_mario_action(m, bully_knock_back_mario(m), 0);
 #ifdef VERSION_SH
         queue_rumble_data(5, 80);
 #endif
+        push_mario_out_of_object(m, o, 5.0f);
+
+        drop_and_set_mario_action(m, bully_knock_back_mario(m), 0);
+        if (m->forwardVel < 0.0f) {
+            o->oMoveAngleYaw = m->faceAngle[1];
+        } else {
+            o->oMoveAngleYaw = m->faceAngle[1] - (m->faceAngle[1] * 2);    
+        }
+            o->oForwardVel = (3392.0f / o->hitboxRadius) / 2.5f;
+
+        attack_object(o, interaction);
+        bounce_back_from_attack(m, interaction);
         return TRUE;
     }
 

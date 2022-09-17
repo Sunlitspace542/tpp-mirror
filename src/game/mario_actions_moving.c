@@ -416,7 +416,7 @@ s32 apply_slope_decel(struct MarioState *m, f32 decelCoef) {
             decel = decelCoef * 0.7f;
             break;
         default:
-            decel = decelCoef * 2.0f;
+            decel = decelCoef * 2.5f;
             break;
         case SURFACE_CLASS_NOT_SLIPPERY:
             decel = decelCoef * 3.0f;
@@ -438,7 +438,7 @@ s32 update_decelerating_speed(struct MarioState *m) {
         stopped = TRUE;
     }
 
-    mario_set_forward_vel(m, m->forwardVel);
+    mario_set_forward_vel(m, 0.0f);
     mario_update_moving_sand(m);
     mario_update_windy_ground(m);
 
@@ -473,6 +473,10 @@ void update_walking_speed(struct MarioState *m) {
         m->forwardVel = 48.0f;
     }
 
+    if (m->forwardVel >= targetSpeed) {  
+        m->forwardVel = m->intendedMag;
+    }
+ 
     m->faceAngle[1] =
         m->intendedYaw - approach_s32((s16)(m->intendedYaw - m->faceAngle[1]), 0, 0x800, 0x800);
     apply_slope_accel(m);
@@ -524,7 +528,7 @@ s32 begin_braking_action(struct MarioState *m) {
         return set_mario_action(m, ACT_BRAKING, 0);
     }
 
-    return set_mario_action(m, ACT_IDLE, 0);
+    return set_mario_action(m, ACT_DECELERATING, 0);
 }
 
 void anim_and_audio_for_walk(struct MarioState *m) {
@@ -536,10 +540,6 @@ void anim_and_audio_for_walk(struct MarioState *m) {
 
     val04 = m->intendedMag > m->forwardVel ? m->intendedMag : m->forwardVel;
 
-    if (val04 < 4.0f) {
-        val04 = 4.0f;
-    }
-
     if (m->quicksandDepth > 50.0f) {
         val14 = (s32)(val04 / 4.0f * 0x10000);
         set_mario_anim_with_accel(m, MARIO_ANIM_MOVE_IN_QUICKSAND, val14);
@@ -549,14 +549,17 @@ void anim_and_audio_for_walk(struct MarioState *m) {
         while (val0C) {
             switch (m->actionTimer) {
                 case 0:
-                    if (val04 > 8.0f) {
+                    if (val04 > 6.0f) {
                         m->actionTimer = 2;
+                        m->pretipTimer = 0;
                     } else {
-                        val14 = (s32)(val04 * 0.75f * 0x10000);
+                        val14 = (m->intendedMag * 10000.0f) * 2.5f;
                         set_mario_anim_with_accel(m, MARIO_ANIM_START_TIPTOE, val14);
                         play_step_sound(m, 7, 22);
-                        if (is_anim_past_frame(m, 23)) {
-                            m->actionTimer = 2;
+                        m->pretipTimer++;
+                        if (m->pretipTimer > 34) {
+                            m->actionTimer = 1; 
+                            m->pretipTimer = 0;
                         }
 
                         val0C = FALSE;
@@ -564,11 +567,10 @@ void anim_and_audio_for_walk(struct MarioState *m) {
                     break;
 
                 case 1:
-                    if (val04 > 8.0f) {
+                    if (val04 > 6.0f) {
                         m->actionTimer = 2;
                     } else {
-                        //! (Speed Crash) If Mario's speed is more than 2^17.
-                        val14 = (s32)(val04 * 0x10000);
+                        val14 = (m->intendedMag * 10000.0f) * 7.5f;
                         set_mario_anim_with_accel(m, MARIO_ANIM_TIPTOE, val14);
                         play_step_sound(m, 14, 72);
 
@@ -578,8 +580,8 @@ void anim_and_audio_for_walk(struct MarioState *m) {
 
                 case 2:
                     if (val04 < 5.0f) {
-                        m->actionTimer = 1;
-                    } else if (val04 > 18.0f) {
+                        m->actionTimer = 0;
+                    } else if (val04 > 10.0f) {
                         m->actionTimer = 3;
                     } else {
                         //! (Speed Crash) If Mario's speed is more than 2^17.
@@ -592,7 +594,7 @@ void anim_and_audio_for_walk(struct MarioState *m) {
                     break;
 
                 case 3:
-                    if (val04 < 14.0f) {
+                    if (val04 < 9.0f) {
                         m->actionTimer = 2;
                     } else {
                         //! (Speed Crash) If Mario's speed is more than 2^17.
@@ -703,6 +705,10 @@ void push_or_sidle_wall(struct MarioState *m, Vec3f startPos) {
             set_mario_anim_with_accel(m, MARIO_ANIM_SIDESTEP_RIGHT, val04);
         } else {
             set_mario_anim_with_accel(m, MARIO_ANIM_SIDESTEP_LEFT, val04);
+        }
+        
+        if (m->forwardVel < 4.0f) {
+            m->particleFlags |= PARTICLE_DUST;
         }
 
         m->actionState = 1;
@@ -817,6 +823,9 @@ s32 act_walking(struct MarioState *m) {
 
     m->actionState = 0;
 
+if ((m->wall != NULL) && (m->action == ACT_WALKING) && (m->actionTimer == 3)) { m->forwardVel = 32; } 
+if ((m->action == ACT_WALKING) && (m->actionTimer != 3) && (m->actionState != 1) || (m->action != ACT_WALKING)) { m->wall = NULL;}
+
     vec3f_copy(startPos, m->pos);
     update_walking_speed(m);
 
@@ -846,6 +855,10 @@ s32 act_walking(struct MarioState *m) {
 s32 act_move_punching(struct MarioState *m) {
     if (should_begin_sliding(m)) {
         return set_mario_action(m, ACT_BEGIN_SLIDING, 0);
+    }
+
+    if (m->input & INPUT_A_PRESSED) {
+        return set_mario_action(m, ACT_JUMP, 0);
     }
 
     m->actionState = 1;
@@ -1067,65 +1080,45 @@ s32 act_braking(struct MarioState *m) {
 }
 
 s32 act_decelerating(struct MarioState *m) {
-    s32 val0C;
-    s16 slopeClass = mario_get_floor_class(m);
+    m->actionTimer++;
 
-    if (!(m->input & INPUT_FIRST_PERSON)) {
-        if (should_begin_sliding(m)) {
-            return set_mario_action(m, ACT_BEGIN_SLIDING, 0);
-        }
+    set_mario_animation(m, MARIO_ANIM_IDLE_HEAD_LEFT);
 
-        if (m->input & INPUT_A_PRESSED) {
-            return set_jump_from_landing(m);
-        }
-
-        if (check_ground_dive_or_punch(m)) {
-            return TRUE;
-        }
-
-        if (m->input & INPUT_NONZERO_ANALOG) {
-            return set_mario_action(m, ACT_WALKING, 0);
-        }
-
-        if (m->input & INPUT_Z_PRESSED) {
-            return set_mario_action(m, ACT_CROUCH_SLIDE, 0);
-        }
+    if (m->input & INPUT_A_PRESSED) {
+        return set_jumping_action(m, ACT_JUMP, 0);
     }
 
-    if (update_decelerating_speed(m)) {
-        return set_mario_action(m, ACT_IDLE, 0);
+    if (m->input & INPUT_OFF_FLOOR) {
+        return set_mario_action(m, ACT_FREEFALL, 0);
     }
 
-    switch (perform_ground_step(m)) {
-        case GROUND_STEP_LEFT_GROUND:
-            set_mario_action(m, ACT_FREEFALL, 0);
-            break;
-
-        case GROUND_STEP_HIT_WALL:
-            if (slopeClass == SURFACE_CLASS_VERY_SLIPPERY) {
-                mario_bonk_reflection(m, TRUE);
-            } else {
-                mario_set_forward_vel(m, 0.0f);
-            }
-            break;
+    if (m->input & INPUT_ABOVE_SLIDE) {
+        return set_mario_action(m, ACT_BEGIN_SLIDING, 0);
     }
 
-    if (slopeClass == SURFACE_CLASS_VERY_SLIPPERY) {
-        set_mario_animation(m, MARIO_ANIM_IDLE_HEAD_LEFT);
-        play_sound(SOUND_MOVING_TERRAIN_SLIDE + m->terrainSoundAddend,
-                   m->marioObj->header.gfx.cameraToObject);
-        m->particleFlags |= PARTICLE_DUST;
-    } else {
-        // (Speed Crash) Crashes if speed exceeds 2^17.
-        if ((val0C = (s32)(m->forwardVel / 4.0f * 0x10000)) < 0x1000) {
-            val0C = 0x1000;
-        }
-
-        set_mario_anim_with_accel(m, MARIO_ANIM_WALKING, val0C);
-        play_step_sound(m, 10, 49);
+    if (m->input & INPUT_FIRST_PERSON) {
+        return set_mario_action(m, ACT_FIRST_PERSON, 0);
     }
 
-    return FALSE;
+    if (m->input & INPUT_NONZERO_ANALOG) {
+        return set_mario_action(m, ACT_WALKING, 0);
+    }
+
+    if (m->input & INPUT_B_PRESSED) {
+        return set_mario_action(m, ACT_MOVE_PUNCHING, 5);
+    }
+
+    if (m->input & INPUT_Z_DOWN) {
+        return set_mario_action(m, ACT_START_CROUCHING, 0);
+    }
+
+    if (m->actionTimer > 5){
+        set_mario_action(m, ACT_IDLE, 0);
+    }
+
+    stationary_ground_step(m);
+
+    return 0;
 }
 
 s32 act_hold_decelerating(struct MarioState *m) {
@@ -1509,7 +1502,7 @@ s32 stomach_slide_action(struct MarioState *m, u32 stopAction, u32 airAction, s3
 }
 
 s32 act_stomach_slide(struct MarioState *m) {
-    s32 cancel = stomach_slide_action(m, ACT_STOMACH_SLIDE_STOP, ACT_FREEFALL, MARIO_ANIM_SLIDE_DIVE);
+    s32 cancel = stomach_slide_action(m, ACT_BUTT_SLIDE_STOP, ACT_FREEFALL, MARIO_ANIM_SLIDE_DIVE);
     return cancel;
 }
 
@@ -1566,7 +1559,7 @@ s32 common_ground_knockback_action(struct MarioState *m, s32 animation, s32 arg2
         play_sound_if_no_flag(m, SOUND_MARIO_ATTACKED, MARIO_MARIO_SOUND_PLAYED);
     } else {
 #ifdef VERSION_JP
-        play_sound_if_no_flag(m, SOUND_MARIO_HOOHOO, MARIO_MARIO_SOUND_PLAYED);
+        play_sound_if_no_flag(m, SOUND_MARIO_ATTACKED, MARIO_MARIO_SOUND_PLAYED);
 #else
         play_sound_if_no_flag(m, SOUND_MARIO_OOOF2, MARIO_MARIO_SOUND_PLAYED);
 #endif
@@ -1583,9 +1576,9 @@ s32 common_ground_knockback_action(struct MarioState *m, s32 animation, s32 arg2
     if (val04 < arg2) {
         apply_landing_accel(m, 0.9f);
     } else if (m->forwardVel >= 0.0f) {
-        mario_set_forward_vel(m, 0.1f);
+        //mario_set_forward_vel(m, 0.1f);
     } else {
-        mario_set_forward_vel(m, -0.1f);
+        //mario_set_forward_vel(m, -0.1f);
     }
 
     if (perform_ground_step(m) == GROUND_STEP_LEFT_GROUND) {
@@ -1599,7 +1592,7 @@ s32 common_ground_knockback_action(struct MarioState *m, s32 animation, s32 arg2
             set_mario_action(m, ACT_STANDING_DEATH, 0);
         } else {
             if (arg4 > 0) {
-                m->invincTimer = 30;
+                //m->invincTimer = 30;
             }
             set_mario_action(m, ACT_IDLE, 0);
         }

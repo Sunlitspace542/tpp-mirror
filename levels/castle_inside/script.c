@@ -38,7 +38,7 @@ static const LevelScript script_func_local_1[] = {
     PAINTING_WARP_NODE(/*id*/ 0x0B, /*destLevel*/ LEVEL_DDD, /*destArea*/ 0x01, /*destNode*/ 0x0A, /*flags*/ WARP_NO_CHECKPOINT),
     OBJECT(/*model*/ MODEL_NONE, /*pos*/  2013,  768, -2014, /*angle*/ 0,    0, 0, /*behParam*/ 0x000A0000, /*beh*/ bhvWarp),
     WARP_NODE(/*id*/ 0x0A, /*destLevel*/ LEVEL_PSS, /*destArea*/ 0x01, /*destNode*/ 0x0A, /*flags*/ WARP_NO_CHECKPOINT),
-    OBJECT(/*model*/ MODEL_NONE, /*pos*/    0,  400,  -3617, /*angle*/ 0,    0, 0, /*behParam*/ 0x300B0000, /*beh*/ bhvWarp),
+    OBJECT(/*model*/ MODEL_NONE, /*pos*/    0,  200,  -3617, /*angle*/ 0,    0, 0, /*behParam*/ 0x300B0000, /*beh*/ bhvWarp),
     WARP_NODE(/*id*/ 0x0B, /*destLevel*/ LEVEL_BOWSER_1, /*destArea*/ 0x01, /*destNode*/ 0x0A, /*flags*/ WARP_NO_CHECKPOINT),
     OBJECT(/*model*/ MODEL_NONE, /*pos*/  1963,  819,  1280, /*angle*/ 0,    0, 0, /*behParam*/ 0x050C0000, /*beh*/ bhvWarp),
     WARP_NODE(/*id*/ 0x0C, /*destLevel*/ LEVEL_SA, /*destArea*/ 0x01, /*destNode*/ 0x0A, /*flags*/ WARP_NO_CHECKPOINT),

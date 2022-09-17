@@ -466,10 +466,8 @@ s32 bowser_land(void) {
         o->header.gfx.unk38.animFrame = 0;
         cur_obj_start_cam_event(o, CAM_EVENT_BOWSER_JUMP);
         if (BITDW) {
-            if (o->oDistanceToMario < 850.0f)
+            if (o->oDistanceToMario < 850.0f && gMarioStates->action != ACT_FIRST_PERSON)
                 gMarioObject->oInteractStatus |= INT_STATUS_MARIO_UNK1;
-            else
-                gMarioObject->oInteractStatus |= INT_STATUS_HOOT_GRABBED_BY_MARIO; // hmm...
         }
         return 1;
     } else
@@ -760,7 +758,7 @@ void bowser_act_dance(void) {
 
 void bowser_spawn_grand_star_key(void) {
     spawn_object_relative(0, 0, 200.0f, 200.0f, o, MODEL_STAR, bhvStar);
-    obj_spawn_loot_yellow_coins(o, 20, 10.0f);
+    obj_spawn_loot_yellow_coins(o, 20, 4.0f);
 }
 
 void bowser_fly_back_dead(void) {
@@ -799,15 +797,15 @@ s8 timer;
 s32 bowser_dead_twirl_into_trophy(void) {
     s32 ret = 0;
     if (o->header.gfx.scale[0] > 0.0) {
-        o->header.gfx.scale[0] = o->header.gfx.scale[0] - 0.02;
-        o->header.gfx.scale[1] = o->header.gfx.scale[1] - 0.02;
-        o->header.gfx.scale[2] = o->header.gfx.scale[2] - 0.02;
+        o->header.gfx.scale[0] = o->header.gfx.scale[0] - 0.03f;
+        o->header.gfx.scale[1] = o->header.gfx.scale[1] - 0.03f;
+        o->header.gfx.scale[2] = o->header.gfx.scale[2] - 0.03f;
     }
-    if (o->header.gfx.scale[1] <= 0.0 && timer == 0)
+    if (o->header.gfx.scale[1] <= 0.0 && timer == 2)
         cur_obj_spawn_particles(&sBowserExplodeParticles);
-    if (o->header.gfx.scale[1] <= 0.0 && timer < 5)
+    if (o->header.gfx.scale[1] <= 0.0 && timer < 9)
         timer++;
-    if (o->header.gfx.scale[1] <= 0.0 && timer == 5)
+    if (o->header.gfx.scale[1] <= 0.0 && timer == 9)
         ret = 1;
     return ret;
 }

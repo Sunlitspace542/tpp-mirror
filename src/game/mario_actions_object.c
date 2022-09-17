@@ -87,6 +87,17 @@ s32 mario_update_punch_sequence(struct MarioState *m) {
                 m->actionArg = 4;
             }
             break;
+        case 5:
+            if ((m->action == ACT_MOVE_PUNCHING)) {
+            if (m->marioObj->header.gfx.unk38.animFrame == 1) {
+                play_sound(SOUND_ACTION_THROW, m->marioObj->header.gfx.cameraToObject);
+            }
+            set_mario_animation(m, MARIO_ANIM_FIRST_PUNCH);
+            m->marioBodyState->punchState = (0 << 6) | 4;
+            //m->particleFlags |= PARTICLE_DUST;
+            m->flags |= MARIO_PUNCHING;
+
+            }
     }
 
     return FALSE;

@@ -70,8 +70,8 @@ void piranha_plant_act_sleeping(void) {
 
     cur_obj_init_animation_with_sound(8);
 
-    cur_obj_set_hitbox_radius_and_height(250.0f, 200.0f);
-    cur_obj_set_hurtbox_radius_and_height(150.0f, 100.0f);
+    cur_obj_set_hitbox_radius_and_height(100.0f, 200.0f);
+    cur_obj_set_hurtbox_radius_and_height(100.0f, 100.0f);
 
 #if BUGFIX_PIRANHA_PLANT_SLEEP_DAMAGE
     /**
@@ -241,8 +241,8 @@ void piranha_plant_act_biting(void) {
 
     cur_obj_init_animation_with_sound(0);
 
-    cur_obj_set_hitbox_radius_and_height(150.0f, 100.0f);
-    cur_obj_set_hurtbox_radius_and_height(150.0f, 100.0f);
+    cur_obj_set_hitbox_radius_and_height(100.0f, 100.0f);
+    cur_obj_set_hurtbox_radius_and_height(100.0f, 100.0f);
 
     // Play a bite sound effect on certain frames.
     if (is_item_in_array(frame, sPiranhaPlantBiteSoundFrames)) {
@@ -252,9 +252,10 @@ void piranha_plant_act_biting(void) {
     // Move to face the player.
     o->oMoveAngleYaw = approach_s16_symmetric(o->oMoveAngleYaw, o->oAngleToMario, 0x400);
 
-    if (o->oDistanceToMario > 500.0f)
-        if (cur_obj_check_if_near_animation_end())
+    if (o->oDistanceToMario > 615.0f) {
+            o->header.gfx.unk38.animFrame = 0;
             o->oAction = PIRANHA_PLANT_ACT_STOPPED_BITING;
+    }
 
     // If the player is wearing the Metal Cap and interacts with the Piranha
     // Plant, the Piranha Plant will die.
@@ -270,8 +271,6 @@ void piranha_plant_act_biting(void) {
  * This is called from both the "stopped biting" state and the "sleeping" state.
  */
 s32 mario_moving_fast_enough_to_make_piranha_plant_bite(void) {
-    if (gMarioStates->vel[1] > 10.0f)
-        return 1;
     if (gMarioStates->forwardVel > 10.0f)
         return 1;
     return 0;
@@ -284,7 +283,7 @@ s32 mario_moving_fast_enough_to_make_piranha_plant_bite(void) {
  */
 void piranha_plant_act_stopped_biting(void) {
     cur_obj_become_intangible();
-    cur_obj_init_animation_with_sound(0);
+    cur_obj_init_animation(0);
 
     if (cur_obj_check_if_near_animation_end())
         o->oAction = PIRANHA_PLANT_ACT_SLEEPING;

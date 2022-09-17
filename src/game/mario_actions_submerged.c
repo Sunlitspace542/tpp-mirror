@@ -46,7 +46,7 @@ static s32 swimming_near_surface(struct MarioState *m) {
         return FALSE;
     }
 
-    return (m->waterLevel - 80) - m->pos[1] < 400.0f;
+    return (m->waterLevel - 100) - m->pos[1] < 400.0f;
 }
 
 static f32 get_buoyancy(struct MarioState *m) {
@@ -179,8 +179,8 @@ static u32 perform_water_step(struct MarioState *m) {
     nextPos[1] = m->pos[1] + step[1];
     nextPos[2] = m->pos[2] + step[2];
 
-    if (nextPos[1] > m->waterLevel - 80) {
-        nextPos[1] = m->waterLevel - 80;
+    if (nextPos[1] > m->waterLevel - 100) {
+        nextPos[1] = m->waterLevel - 100;
         m->vel[1] = 0.0f;
     }
 
@@ -321,8 +321,12 @@ static void common_idle_step(struct MarioState *m, s32 animation, s32 arg) {
         m->forwardVel -= 2.5f;
     }
 
-    if (m->forwardVel > 8.0f) {
-        m->forwardVel = 8.0f;
+    if (m->forwardVel > 12.0f) {
+        m->forwardVel = 12.0f;
+    }
+
+    if (m->forwardVel > 2.0f) {
+        set_swimming_at_surface_particles(m, PARTICLE_WAVE_TRAIL);
     }
 
     if (m->faceAngle[0] < targetPitch) {
@@ -490,7 +494,7 @@ static void common_swimming_step(struct MarioState *m, s16 swimStrength) {
 
     m->marioBodyState->headAngle[0] = approach_s32(m->marioBodyState->headAngle[0], 0, 0x200, 0x200);
 
-    float_surface_gfx(m);
+    //float_surface_gfx(m);
     set_swimming_at_surface_particles(m, PARTICLE_WAVE_TRAIL);
 }
 
@@ -506,7 +510,7 @@ static s32 check_water_jump(struct MarioState *m) {
     s32 probe = (s32)(m->pos[1] + 1.5f);
 
     if (m->input & INPUT_A_PRESSED) {
-        if (probe >= m->waterLevel - 80 && m->faceAngle[0] >= 0 && m->controller->stickY < -60.0f) {
+        if (probe >= m->waterLevel - 100 && m->faceAngle[0] >= 0 && m->controller->stickY < -63.0f) {
             vec3s_set(m->angleVel, 0, 0, 0);
 
             m->vel[1] = 62.0f;
@@ -875,15 +879,13 @@ static s32 act_water_punch(struct MarioState *m) {
 }
 
 static void common_water_knockback_step(struct MarioState *m, s32 animation, u32 endAction, s32 arg3) {
-    stationary_slow_down(m);
-    perform_water_step(m);
     set_mario_animation(m, animation);
 
     m->marioBodyState->headAngle[0] = 0;
 
     if (is_anim_at_end(m)) {
         if (arg3 > 0) {
-            m->invincTimer = 30;
+            //m->invincTimer = 30;
         }
 
         set_mario_action(m, m->health >= 0x100 ? endAction : ACT_WATER_DEATH, 0);
@@ -911,7 +913,7 @@ static s32 act_water_shocked(struct MarioState *m) {
     }
 
     if (m->actionTimer >= 6) {
-        m->invincTimer = 30;
+        //m->invincTimer = 30;
         set_mario_action(m, m->health < 0x100 ? ACT_WATER_DEATH : ACT_WATER_IDLE, 0);
     }
 
@@ -997,7 +999,7 @@ static s32 act_water_plunge(struct MarioState *m) {
     if (stepResult == WATER_STEP_HIT_FLOOR || m->vel[1] >= endVSpeed || m->actionTimer > 20) {
         switch (stateFlags) {
             case 0:
-                set_mario_action(m, ACT_WATER_ACTION_END, 0);
+                set_mario_action(m, ACT_WATER_IDLE, 0);
                 break;
             case 1:
                 set_mario_action(m, ACT_HOLD_WATER_ACTION_END, 0);
@@ -1020,7 +1022,7 @@ static s32 act_water_plunge(struct MarioState *m) {
 
     switch (stateFlags) {
         case 0:
-            set_mario_animation(m, MARIO_ANIM_WATER_ACTION_END);
+            set_mario_animation(m, MARIO_ANIM_SWIM_WAIT);
             break;
         case 1:
             set_mario_animation(m, MARIO_ANIM_WATER_ACTION_END_WITH_OBJ);
