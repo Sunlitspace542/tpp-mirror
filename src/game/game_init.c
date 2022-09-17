@@ -275,8 +275,9 @@ void draw_reset_bars(void) {
 
         for (sp24 = 0; sp24 < ((SCREEN_HEIGHT / 16) + 1); sp24++) {
             // Must be on one line to match -O2
-            for (sp20 = 0; sp20 < (SCREEN_WIDTH / 4); sp20++)
+            for (sp20 = 0; sp20 < (SCREEN_WIDTH / 4); sp20++) {
                 *sp18++ = 0;
+            }
             sp18 += ((SCREEN_WIDTH / 4) * 14);
         }
     }

@@ -603,7 +603,8 @@ s32 act_side_flip(struct MarioState *m) {
 
     // (this need to be on one line to match on PAL)
     // clang-format off
-    if (m->marioObj->header.gfx.unk38.animFrame == 6) play_sound(SOUND_ACTION_SIDE_FLIP_UNK, m->marioObj->header.gfx.cameraToObject);
+    if (m->marioObj->header.gfx.unk38.animFrame == 6) { play_sound(SOUND_ACTION_SIDE_FLIP_UNK, m->marioObj->header.gfx.cameraToObject);
+}
     // clang-format on
     return FALSE;
 }

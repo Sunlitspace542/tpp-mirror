@@ -107,8 +107,9 @@ void func_802F4B08() {
     //  slt   $at, $t9, $t0
     //  beqz  $at, .L802F4BE0
     //   nop
-    if (!sp28 || sp28->validCount >= sp28->msgCount)
+    if (!sp28 || sp28->validCount >= sp28->msgCount) {
         return;
+    }
     //  lw    $t1, 0x28($sp)
     //  lw    $t6, 0x2c($sp)
     //  lw    $t2, 0xc($t1)

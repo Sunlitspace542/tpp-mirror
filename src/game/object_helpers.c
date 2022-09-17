@@ -988,8 +988,9 @@ BAD_RETURN(s32) cur_obj_extend_animation_if_at_end(void) {
     s32 sp4 = o->header.gfx.unk38.animFrame;
     s32 sp0 = o->header.gfx.unk38.curAnim->unk08 - 2;
 
-    if (sp4 == sp0)
+    if (sp4 == sp0) {
         o->header.gfx.unk38.animFrame--;
+    }
 }
 
 s32 cur_obj_check_if_near_animation_end(void) {

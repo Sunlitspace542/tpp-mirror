@@ -718,8 +718,9 @@ void audio_reset_session(void) {
             }
 
             for (i = 0; i < gMaxSimultaneousNotes; i++) {
-                if (gNotes[i].enabled)
+                if (gNotes[i].enabled) {
                     break;
+                }
             }
 
             if (i == gMaxSimultaneousNotes) {
@@ -741,8 +742,9 @@ void audio_reset_session(void) {
         remainingDmas = gCurrAudioFrameDmaCount;
         while (remainingDmas > 0) {
             for (i = 0; i < gCurrAudioFrameDmaCount; i++) {
-                if (osRecvMesg(&gCurrAudioFrameDmaQueue, NULL, OS_MESG_NOBLOCK) == 0)
+                if (osRecvMesg(&gCurrAudioFrameDmaQueue, NULL, OS_MESG_NOBLOCK) == 0) {
                     remainingDmas--;
+                }
             }
         }
         gCurrAudioFrameDmaCount = 0;

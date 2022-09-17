@@ -469,7 +469,7 @@ void patch_audio_bank(struct AudioBank *mem, u8 *offset, u32 numInstruments, u32
 #ifndef VERSION_EU
     if (drums != NULL && numDrums > 0) {
         mem->drums = (void *) ((uintptr_t) drums + (uintptr_t) mem);
-        if (numDrums > 0) //! unneeded when -sopt is enabled
+        if (numDrums > 0) { //! unneeded when -sopt is enabled
             for (i = 0; i < numDrums; i++) {
 #else
     numDrums2 = numDrums;
@@ -496,12 +496,13 @@ void patch_audio_bank(struct AudioBank *mem, u8 *offset, u32 numInstruments, u32
                     }
                 }
             }
+        }
     }
 
     //! Doesn't affect EU, but required for US/JP
     temp = &*mem;
 #ifndef VERSION_EU
-    if (numInstruments >= 1)
+    if (numInstruments >= 1) {
 #endif
         if (numInstruments > 0) {
             //! Doesn't affect EU, but required for US/JP
@@ -548,6 +549,7 @@ void patch_audio_bank(struct AudioBank *mem, u8 *offset, u32 numInstruments, u32
         } while (end != itInstrs);
 #endif
         }
+    }
 #undef PATCH_MEM
 #undef PATCH
 #undef PATCH_SOUND

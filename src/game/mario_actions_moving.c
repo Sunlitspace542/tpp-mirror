@@ -1112,7 +1112,7 @@ s32 act_decelerating(struct MarioState *m) {
         return set_mario_action(m, ACT_START_CROUCHING, 0);
     }
 
-    if (m->actionTimer > 5){
+    if (m->actionTimer > 5) {
         set_mario_action(m, ACT_IDLE, 0);
     }
 

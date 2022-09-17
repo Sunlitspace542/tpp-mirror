@@ -250,8 +250,9 @@ void func_802ad7ec(u32 arg0) {
     u8 i = (arg0 >> 8) & 0xff;
 
     for (;;) {
-        if (i == end)
+        if (i == end) {
             break;
+        }
         cmd = &sAudioCmd[i++ & 0xff];
 
         if (cmd->u.s.arg1 < SEQUENCE_PLAYERS) {

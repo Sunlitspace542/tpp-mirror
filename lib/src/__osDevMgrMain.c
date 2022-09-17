@@ -28,23 +28,26 @@ void __osDevMgrMain(void *args) {
             if (sp24->transferMode != 3) {
                 sp28->dramAddr = (void *) ((u32) sp28->dramAddr - sp28->sectorSize);
             }
-            if (sp24->transferMode == 2 && sp44->piHandle->transferInfo.cmdType == 0)
+            if (sp24->transferMode == 2 && sp44->piHandle->transferInfo.cmdType == 0) {
                 sp2c = 1;
-            else
+            } else {
                 sp2c = 0;
+            }
             osRecvMesg(sp34->unk10, &sp3c, OS_MESG_BLOCK);
             func_802F7140(0x00100401); // remove magic constant!
             func_802F71A0(sp44->piHandle, 0x05000510, (sp24->bmCtlShadow | 0x80000000));
             while (1) {
                 osRecvMesg(sp34->unk0c, &sp40, OS_MESG_BLOCK);
                 sp30 = osSendMesg(sp44->hdr.retQueue, sp44, OS_MESG_NOBLOCK);
-                if (sp2c != 1 || sp44->piHandle->transferInfo.unk10 != 0)
+                if (sp2c != 1 || sp44->piHandle->transferInfo.unk10 != 0) {
                     break;
+                }
                 sp2c = 0;
             }
             osSendMesg(sp34->unk10, NULL, OS_MESG_NOBLOCK);
-            if (sp44->piHandle->transferInfo.blockNum == 1)
+            if (sp44->piHandle->transferInfo.blockNum == 1) {
                 func_802F71F0();
+            }
         } else {
             switch (sp44->hdr.type) {
                 case 11:

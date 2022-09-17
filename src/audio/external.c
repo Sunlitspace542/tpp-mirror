@@ -1968,10 +1968,11 @@ void set_sound_disabled(u8 disabled) {
 
     for (i = 0; i < SEQUENCE_PLAYERS; i++) {
 #ifdef VERSION_EU
-        if (disabled)
+        if (disabled) {
             func_802ad74c(0xf1000000, 0);
-        else
+        } else {
             func_802ad74c(0xf2000000, 0);
+        }
 #else
         gSequencePlayers[i].muted = disabled;
 #endif

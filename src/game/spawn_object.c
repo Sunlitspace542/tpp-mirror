@@ -249,8 +249,9 @@ struct Object *allocate_object(struct ObjectNode *objList) {
     }
 #else
     // -O2 needs everything until = on the same line
-    for (i = 0; i < 0x50; i++)
+    for (i = 0; i < 0x50; i++) {
         obj->rawData.asS32[i] = 0;
+    }
 #endif
 
     obj->unused1 = 0;

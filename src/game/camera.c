@@ -2453,8 +2453,9 @@ s32 exit_c_up(struct Camera *c) {
 
             gCameraMovementFlags |= CAM_MOVE_STARTED_EXITING_C_UP;
 
-            if (!(gObjCutsceneDone))
+            if (!(gObjCutsceneDone)) {
                 transition_next_state(c, 15);
+            }
         } else {
             // Let the next camera mode handle it
             gCameraMovementFlags &= ~(CAM_MOVE_STARTED_EXITING_C_UP | CAM_MOVE_C_UP_MODE);

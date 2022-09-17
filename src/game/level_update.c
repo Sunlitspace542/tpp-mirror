@@ -972,9 +972,9 @@ s32 play_mode_normal(void) {
 
 s32 play_mode_paused(void) {
     if (gPauseScreenMode == 0) {
-        if (gCurrCourseNum >= COURSE_MIN && gCurrCourseNum <= COURSE_MAX)
+        if (gCurrCourseNum >= COURSE_MIN && gCurrCourseNum <= COURSE_MAX) {
             set_menu_mode(1);
-        else {
+        } else {
             set_menu_mode(0);
         }
     } else if (gPauseScreenMode == 2) {

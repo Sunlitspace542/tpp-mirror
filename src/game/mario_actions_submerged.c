@@ -502,8 +502,9 @@ static void play_swimming_noise(struct MarioState *m) {
     s16 animFrame = m->marioObj->header.gfx.unk38.animFrame;
 
     // (this need to be on one line to match on PAL)
-    if (animFrame == 0 || animFrame == 12)
+    if (animFrame == 0 || animFrame == 12) {
         play_sound(SOUND_ACTION_UNKNOWN434, m->marioObj->header.gfx.cameraToObject);
+    }
 }
 
 static s32 check_water_jump(struct MarioState *m) {
