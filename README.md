@@ -8,25 +8,67 @@ Please create any issues you find and feel free to pull request, any contributio
 
 Original assets, to-do lists and more can soon be found in a special repository.
 
-# Credits
+## Credits
 
-**Fluvian (Programming)**
+### Original "The Preservation Project" Team
 
-**Marionova (Programming)**
+#### Programming
 
-**EmmaNerd (Art & Sound)**
+*Fluvian*
 
-**CDi-Fails (Art & Models)**
+*Marionova*
 
-**Lurondor (Art & Models)**
+#### Textures
 
-**Robichu (Art & Models)**
+*EmmaNerd*
 
-**Zucchino (Art & Models)**
+*CDi-Fails*
 
-**Xiartic (Research & Playtesting)**
+*Lurondor*
 
-**Original Super Mario 64 Decompilation Team**
+*Robichu*
+
+*Zucchino*
+
+*HoloMario*
+
+#### Models
+
+*CDi-Fails*
+
+*Lurondor*
+
+*Robichu*
+
+*Zucchino*
+
+#### Sound
+
+*EmmaNerd*
+
+#### Research
+
+*Xiartic*
+
+#### Playtesting
+
+*Xiartic*
+
+*lunr*
+
+### Contributors
+
+*The1UPGuy*
+
+*Guestpiki*
+
+*iProgramInCpp*
+
+*Toru the Red Fox*
+
+*CreamDream*
+
+### Original Super Mario 64 Decompilation Team
 
 ## Installation
 
