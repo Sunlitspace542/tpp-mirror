@@ -384,8 +384,7 @@ u32 common_air_action_step(struct MarioState *m, u32 landAction, s32 animation, 
             set_mario_animation(m, animation);
 
             if (m->forwardVel > 16.0f) {
-                set_mario_animation(m, MARIO_ANIM_START_WALLKICK);
-#ifdef VERSION_SH
+#if VERSION_SH
                 queue_rumble_data(5, 40);
 #endif
                 mario_bonk_reflection(m, FALSE);
@@ -1305,18 +1304,15 @@ s32 act_air_hit_wall(struct MarioState *m) {
         return set_mario_action(m, ACT_SOFT_BONK, 0);
     }
 
-#ifdef AVOID_UB
-    return
-#endif
-        set_mario_animation(m, MARIO_ANIM_START_WALLKICK);
+    set_mario_animation(m, MARIO_ANIM_START_WALLKICK);
+    return 0;
 
     //! Missing return statement. The returned value is the result of the call
     // to set_mario_animation. In practice, this value is nonzero.
     // This results in this action "cancelling" into itself. It is supposed to
-    // execute three times, each on a separate frame, but instead it executes
-    // three times on the same frame.
+    // execute on two frames, but instead it executes twice on the same frame.
     // This results in firsties only being possible for a single frame, instead
-    // of three.
+    // of two.
 }
 
 s32 act_forward_rollout(struct MarioState *m) {
