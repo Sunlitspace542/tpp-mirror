@@ -1020,6 +1020,11 @@ s32 act_exit_airborne(struct MarioState *m) {
         // heal mario
         m->healCounter = 31;
     }
+
+    if (m->actionTimer == 19) {
+        play_sound(SOUND_MARIO_HOOHOO, m->marioObj->header.gfx.cameraToObject);
+    }
+
     // rotate him to face away from the entrance
     m->marioObj->header.gfx.angle[1] += 0x8000;
     return FALSE;
