@@ -570,8 +570,7 @@ static s32 act_breaststroke(struct MarioState *m) {
     }
 
     if (m->actionTimer == 1) {
-        play_sound(sSwimStrength == MIN_SWIM_STRENGTH ? SOUND_ACTION_SWIM : SOUND_ACTION_SWIM_FAST,
-                   m->marioObj->header.gfx.cameraToObject);
+        play_sound(SOUND_ACTION_SWIM, m->marioObj->header.gfx.cameraToObject);
         reset_float_globals(m);
     }
 
