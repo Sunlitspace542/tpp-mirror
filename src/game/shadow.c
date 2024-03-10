@@ -875,9 +875,12 @@ Gfx *create_shadow_below_xyz(f32 xPos, f32 yPos, f32 zPos, s16 shadowScale, u8 s
             displayList = create_shadow_circle_assuming_flat_ground(xPos, yPos, zPos, shadowScale,
                                                                     shadowSolidity);
             break;
-        case SHADOW_CIRCLE_PLAYER:
+        case SHADOW_CIRCLE_MARIO:
             displayList = create_shadow_player(xPos, yPos, zPos, shadowScale, shadowSolidity,
                                                /* isLuigi */ FALSE);
+        case SHADOW_CIRCLE_LUIGI:
+            displayList = create_shadow_player(xPos, yPos, zPos, shadowScale, shadowSolidity,
+                                               /* isLuigi */ TRUE);
             break;
     }
     return displayList;

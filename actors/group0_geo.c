@@ -19,6 +19,5 @@
 // Mario
 #include "mario/mario/hms_mario.sou"
 
-/* Luigi
+// Luigi
 #include "mario/luigi/hms_luigi.sou"
-*/

@@ -188,6 +188,11 @@
     CMD_W(behArg), \
     CMD_PTR(beh)
 
+#define LUIGI(unk3, behArg, beh) \
+    CMD_BBBB(0x25, 0x0C, 0x01, unk3), \
+    CMD_W(behArg), \
+    CMD_PTR(beh)
+
 #define WARP_NODE(id, destLevel, destArea, destNode, flags) \
     CMD_BBBB(0x26, 0x08, id, destLevel), \
     CMD_BBBB(destArea, destNode, flags, 0x00)
@@ -209,6 +214,11 @@
 
 #define MARIO_POS(area, yaw, posX, posY, posZ) \
     CMD_BBBB(0x2B, 0x0C, area, 0x00), \
+    CMD_HH(yaw, posX), \
+    CMD_HH(posY, posZ)
+
+#define LUIGI_POS(area, yaw, posX, posY, posZ) \
+    CMD_BBBB(0x2B, 0x0C, area, 0x01), \
     CMD_HH(yaw, posX), \
     CMD_HH(posY, posZ)
 

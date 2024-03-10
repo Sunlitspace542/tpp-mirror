@@ -12,7 +12,7 @@ const GeoLayout water_land_area_1_geo[] = {
       GEO_OPEN_NODE(),
          GEO_CAMERA_FRUSTUM_WITH_FUNC(45, 100, 12800, geo_camera_fov),
          GEO_OPEN_NODE(),
-            GEO_CAMERA(2, 0, 2000, 6000, 2560, 0, 512, geo_camera_main),
+            GEO_CAMERA(5, 0, 2000, 6000, 2560, 0, 512, geo_camera_main),
             GEO_OPEN_NODE(),
                GEO_DISPLAY_LIST(LAYER_OPAQUE, water_land_1_dl_mesh),
                GEO_DISPLAY_LIST(LAYER_OPAQUE, water_land_2_dl_mesh),

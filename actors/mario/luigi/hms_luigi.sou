@@ -348,7 +348,7 @@ static Hierarchy RCP_FarLuigiHierarchy[] = {
 /********************************************************************************/
 
 Hierarchy RCP_LuigiHierarchy[] = {
- 	hmsShadow(100, 180, 99)
+ 	hmsShadow(100, 180, 98)
 	hmsBegin()
 		hmsScale(0.25f)
 		hmsBegin()

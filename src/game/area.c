@@ -20,7 +20,7 @@
 #include "save_file.h"
 #include "level_table.h"
 
-struct SpawnInfo gPlayerSpawnInfos[1];
+struct SpawnInfo gPlayerSpawnInfos[2];
 struct GraphNode *D_8033A160[0x100];
 struct Area gAreaData[8];
 
@@ -34,6 +34,7 @@ s16 gPauseScreenMode;
 s16 gSaveOptSelectIndex;
 
 struct SpawnInfo *gMarioSpawnInfo = &gPlayerSpawnInfos[0];
+struct SpawnInfo *gLuigiSpawnInfo = &gPlayerSpawnInfos[1];
 struct GraphNode **gLoadedGraphNodes = D_8033A160;
 struct Area *gAreas = gAreaData;
 struct Area *gCurrentArea = NULL;
@@ -178,6 +179,7 @@ void clear_areas(void) {
     gWarpTransition.isActive = FALSE;
     gWarpTransition.pauseRendering = FALSE;
     gMarioSpawnInfo->areaIndex = -1;
+    gLuigiSpawnInfo->areaIndex = -1;
 
     for (i = 0; i < 8; i++) {
         gAreaData[i].index = i;
@@ -257,6 +259,11 @@ void load_mario_area(void) {
         gCurrentArea->flags |= 0x01;
         spawn_objects_from_info(0, gMarioSpawnInfo);
     }
+
+    if (gCurrentArea->index == gLuigiSpawnInfo->areaIndex) {
+        gCurrentArea->flags |= 0x02;
+        spawn_objects_from_info(0, gLuigiSpawnInfo);
+    }
 }
 
 void unload_mario_area(void) {
@@ -264,6 +271,15 @@ void unload_mario_area(void) {
         unload_objects_from_area(0, gMarioSpawnInfo->activeAreaIndex);
 
         gCurrentArea->flags &= ~0x01;
+        if (gCurrentArea->flags == 0) {
+            unload_area();
+        }
+    }
+
+    if (gCurrentArea != NULL && (gCurrentArea->flags & 0x02)) {
+        unload_objects_from_area(0, gLuigiSpawnInfo->activeAreaIndex);
+
+        gCurrentArea->flags &= ~0x02;
         if (gCurrentArea->flags == 0) {
             unload_area();
         }
@@ -278,11 +294,22 @@ void change_area(s32 index) {
         load_area(index);
 
         gCurrentArea->flags = areaFlags;
-        gMarioObject->oActiveParticleFlags = 0;
+
+        if (areaFlags & 0x01) {
+            gMarioObject->oActiveParticleFlags = 0;
+        }
+
+        if (areaFlags & 0x02) {
+            gMarioObject->oActiveParticleFlags = 0;
+        }
     }
 
     if (areaFlags & 0x01) {
         gMarioObject->header.gfx.unk18 = index, gMarioSpawnInfo->areaIndex = index;
+    }
+
+    if (areaFlags & 0x02) {
+        gLuigiObject->header.gfx.unk18 = index, gLuigiSpawnInfo->areaIndex = index;
     }
 }
 

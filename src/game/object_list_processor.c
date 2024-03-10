@@ -501,6 +501,11 @@ void spawn_objects_from_info(UNUSED s32 unused, struct SpawnInfo *spawnInfo) {
                 geo_make_first_child(&object->header.gfx.node);
             }
 
+            if (spawnInfo->behaviorArg & 0x02) {
+                gLuigiObject = object;
+                geo_make_first_child(&object->header.gfx.node);
+            }
+
             geo_obj_init_spawninfo(&object->header.gfx, spawnInfo);
 
             object->oPosX = spawnInfo->startPos[0];
@@ -533,6 +538,7 @@ void clear_objects(void) {
     gTHIWaterDrained = 0;
     gTimeStopState = 0;
     gMarioObject = NULL;
+    gLuigiObject = NULL;
     gMarioCurrentRoom = 0;
 
     for (i = 0; i < 60; i++) {

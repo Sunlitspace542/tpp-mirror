@@ -707,6 +707,39 @@ void focus_on_mario(Vec3f focus, Vec3f pos, f32 posYOff, f32 focYOff, f32 dist, 
     focus[2] = sMarioCamState->pos[2];
 }
 
+void focus_on_mario_and_luigi(Vec3f focus, Vec3f pos, f32 posYOff, f32 focYOff, f32 dist, s16 pitch, s16 yaw) {
+    Vec3f marioPos;
+    Vec3f luigiPos;
+    Vec3f centerPos;
+    f32 distance;
+    f32 distanceMultiplier;
+
+    marioPos[0] = sMarioCamState->pos[0];
+    marioPos[1] = sMarioCamState->pos[1] + posYOff;
+    marioPos[2] = sMarioCamState->pos[2];
+
+    luigiPos[0] = sLuigiCamState->pos[0];
+    luigiPos[1] = sLuigiCamState->pos[1] + posYOff;
+    luigiPos[2] = sLuigiCamState->pos[2];
+
+    centerPos[0] = (marioPos[0] + luigiPos[0]) / 2.f;
+    centerPos[1] = (marioPos[1] + luigiPos[1]) / 2.f;
+    centerPos[2] = (marioPos[2] + luigiPos[2]) / 2.f;
+
+    distance = calc_abs_dist(marioPos, luigiPos);
+    distanceMultiplier = 1.f;
+
+    if (distance > 1000.f) {
+        distanceMultiplier = 1.f + (distance - 1000.f) / 1000.f;
+    }
+
+    vec3f_set_dist_and_angle(centerPos, pos, dist * distanceMultiplier, pitch + sLakituPitch, yaw);
+
+    focus[0] = (sMarioCamState->pos[0] + sLuigiCamState->pos[0]) / 2.f;
+    focus[1] = (sMarioCamState->pos[1] + sLuigiCamState->pos[1]) / 2.f + focYOff;
+    focus[2] = (sMarioCamState->pos[2] + sLuigiCamState->pos[2]) / 2.f;
+}
+
 static UNUSED void set_pos_to_mario(Vec3f foc, Vec3f pos, f32 yOff, f32 focYOff, f32 dist, s16 pitch,
                                     s16 yaw) {
     Vec3f marioPos;
@@ -910,6 +943,20 @@ s32 update_radial_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
     return camYaw;
 }
 
+s32 update_multiplayer_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
+    f32 playerDistX = ABS2(sMarioCamState->pos[0] + sLuigiCamState->pos[0]) / 2.f;
+    f32 playerDistZ = ABS2(sMarioCamState->pos[2] + sLuigiCamState->pos[2]) / 2.f;
+    s16 camYaw = atan2s(playerDistZ, playerDistX) + sModeOffsetYaw;
+    s16 pitch = look_down_slopes(camYaw);
+    f32 yOff = 125.f;
+    f32 baseDist = 1000.f;
+
+    sAreaYaw = camYaw - sModeOffsetYaw;
+    focus_on_mario_and_luigi(focus, pos, yOff, yOff, sLakituDist + baseDist, pitch, camYaw);
+
+    return camYaw;
+}
+
 /**
  * Update the camera during 8 directional mode
  */
@@ -1033,7 +1080,7 @@ void radial_camera_move(struct Camera *c) {
         if (avoidStatus == 3) {
             approach_s16_asymptotic_bool(&sModeOffsetYaw, avoidYaw, 10);
         } else {
-            if (c->mode == CAMERA_MODE_RADIAL) {
+            if (c->mode == CAMERA_MODE_RADIAL || c->mode == CAMERA_MODE_MULTIPLAYER) {
                 // sModeOffsetYaw only updates when mario is moving
                 rotateSpeed = gMarioStates[0].forwardVel / 32.f * 128.f;
                 camera_approach_s16_symmetric_bool(&sModeOffsetYaw, yawOffset, rotateSpeed);
@@ -1134,6 +1181,21 @@ void mode_radial_camera(struct Camera *c) {
     if (sMarioCamState->action == ACT_RIDING_HOOT) {
         pos[1] += 500.f;
     }
+    set_camera_height(c, pos[1]);
+}
+
+void mode_multiplayer_camera(struct Camera *c) {
+    Vec3f pos;
+    s16 oldAreaYaw = sAreaYaw;
+
+    radial_camera_input_default(c);
+    radial_camera_move(c);
+
+    lakitu_zoom(400.f, 0x900);
+    c->nextYaw = update_multiplayer_camera(c, c->focus, pos);
+    c->pos[0] = pos[0];
+    c->pos[2] = pos[2];
+    sAreaYawChange = sAreaYaw - oldAreaYaw;
     set_camera_height(c, pos[1]);
 }
 
@@ -2907,6 +2969,10 @@ void update_camera(struct Camera *c) {
             switch (c->mode) {
                 case CAMERA_MODE_BEHIND_MARIO:
                     mode_behind_mario_camera(c);
+                    break;
+
+                case CAMERA_MODE_MULTIPLAYER:
+                    mode_multiplayer_camera(c);
                     break;
 
                 case CAMERA_MODE_C_UP:
@@ -4685,7 +4751,7 @@ s32 radial_camera_input(struct Camera *c, UNUSED f32 unused) {
                     gCameraMovementFlags |= CAM_MOVE_ROTATE_RIGHT;
                 }
 
-                if (c->mode == CAMERA_MODE_RADIAL) {
+                if (c->mode == CAMERA_MODE_RADIAL || c->mode == CAMERA_MODE_MULTIPLAYER) {
                     // if > ~48 degrees, we're rotating for the second time.
                     if (sModeOffsetYaw > 0x22AA) {
                         s2ndRotateFlags |= CAM_MOVE_ROTATE_RIGHT;
@@ -4714,7 +4780,7 @@ s32 radial_camera_input(struct Camera *c, UNUSED f32 unused) {
                     gCameraMovementFlags |= CAM_MOVE_ROTATE_LEFT;
                 }
 
-                if (c->mode == CAMERA_MODE_RADIAL) {
+                if (c->mode == CAMERA_MODE_RADIAL || c->mode == CAMERA_MODE_MULTIPLAYER) {
                     // if < ~48 degrees, we're rotating for the second time.
                     if (sModeOffsetYaw < -0x22AA) {
                         s2ndRotateFlags |= CAM_MOVE_ROTATE_LEFT;
@@ -4745,7 +4811,9 @@ s32 radial_camera_input(struct Camera *c, UNUSED f32 unused) {
             gCameraMovementFlags &= ~CAM_MOVE_ZOOMED_OUT;
             play_sound_cbutton_up();
         } else {
-            set_mode_c_up(c);
+            if (c->mode != CAMERA_MODE_MULTIPLAYER) {
+                set_mode_c_up(c);
+            }
         }
     }
 
@@ -6299,25 +6367,6 @@ s16 camera_course_processing(struct Camera *c) {
     // Area-specific camera processing
     if (!(sStatusFlags & CAM_FLAG_BLOCK_AREA_PROCESSING)) {
         switch (gCurrLevelArea) {
-            case AREA_WF:
-                switch (sMarioGeometry.currFloorType) {
-                    case SURFACE_CAMERA_8_DIR:
-                        transition_to_camera_mode(c, CAMERA_MODE_8_DIRECTIONS, 90);
-                        s8DirModeBaseYaw = DEGREES(90);
-                        break;
-
-                    case SURFACE_BOSS_FIGHT_CAMERA:
-                        if (gCurrActNum == 1) {
-                            set_camera_mode_boss_fight(c);
-                        } else {
-                            set_camera_mode_radial(c, 60);
-                        }
-                        break;
-                    default:
-                        set_camera_mode_radial(c, 60);
-                }
-                break;
-            
             case AREA_BBH:
                 // if camera is fixed at bbh_room_13_balcony_camera (but as floats)
                 if (vec3f_compare(sFixedModeBasePosition, 210.f, 420.f, 3109.f) == 1) {

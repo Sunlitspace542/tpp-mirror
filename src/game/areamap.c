@@ -115,32 +115,57 @@ void create_areamap_texture_dlist(Gfx **dlist, struct AreaMapData *areaMap) {
 }
 
 void create_areamap_arrow_dlist(Gfx **dlist, UNUSED struct AreaMapData *areaMap) {
-    Mtx *translate = alloc_display_list(sizeof(Mtx));
-    Mtx *rotate = alloc_display_list(sizeof(Mtx));
-    Vtx *verts = alloc_display_list(4 * sizeof(Vtx));
+    Mtx *mario_translate = alloc_display_list(sizeof(Mtx));
+    Mtx *mario_rotate = alloc_display_list(sizeof(Mtx));
+    Vtx *mario_verts = alloc_display_list(4 * sizeof(Vtx));
 
-    make_vertex(verts, 0, -4, -4, 0, 0, 256, 255, 0, 0, 255);
-    make_vertex(verts, 1, 4, -4, 0, 256, 256, 255, 0, 0, 255);
-    make_vertex(verts, 2, 4, 4, 0, 256, 0, 255, 0, 0, 255);
-    make_vertex(verts, 3, -4, 4, 0, 0, 0, 255, 0, 0, 255);
+    Mtx *luigi_translate = alloc_display_list(sizeof(Mtx));
+    Mtx *luigi_rotate = alloc_display_list(sizeof(Mtx));
+    Vtx *luigi_verts = alloc_display_list(4 * sizeof(Vtx));
 
-    guTranslate(translate, (f32)(sMapX + (gMarioState->pos[0] / 256) * areaMap->side_g + areaMap->xo_g),
-                (f32)(sMapY - (gMarioState->pos[2] / 256) * areaMap->side_g + areaMap->zo_g), 0.0f);
-    guRotate(rotate, (f32)(gMarioState->faceAngle[1] / 180) + 180, 0.0f, 0.0f, 1.0f);
+    make_vertex(mario_verts, 0, -4, -4, 0, 0, 256, 255, 0, 0, 255);
+    make_vertex(mario_verts, 1, 4, -4, 0, 256, 256, 255, 0, 0, 255);
+    make_vertex(mario_verts, 2, 4, 4, 0, 256, 0, 255, 0, 0, 255);
+    make_vertex(mario_verts, 3, -4, 4, 0, 0, 0, 255, 0, 0, 255);
 
-    gSPMatrix((*dlist)++, translate, G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
-    gSPMatrix((*dlist)++, rotate, G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_NOPUSH);
+    guTranslate(mario_translate, (f32)(sMapX + (gMarioState->pos[0] / 256) * areaMap->side_g + areaMap->xo_g), (f32)(sMapY - (gMarioState->pos[2] / 256) * areaMap->side_g + areaMap->zo_g), 0.0f);
+    guRotate(mario_rotate, (f32)(gMarioState->faceAngle[1] / 180) + 180, 0.0f, 0.0f, 1.0f);
+
+    gSPMatrix((*dlist)++, mario_translate, G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
+    gSPMatrix((*dlist)++, mario_rotate, G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_NOPUSH);
 
     gDPSetTextureFilter((*dlist)++, G_TF_POINT);
 
-    gSPVertex((*dlist)++, VIRTUAL_TO_PHYSICAL(verts), 4, 0);
+    gSPVertex((*dlist)++, VIRTUAL_TO_PHYSICAL(mario_verts), 4, 0);
+    gSPDisplayList((*dlist)++, dl_draw_quad_verts_0123);
+
+    gSPPopMatrix((*dlist)++, G_MTX_MODELVIEW);
+
+    if (gLuigiState->marioObj == NULL) {
+        return;
+    }
+
+    make_vertex(luigi_verts, 0, -4, -4, 0, 0, 256, 0, 255, 0, 255);
+    make_vertex(luigi_verts, 1, 4, -4, 0, 256, 256, 0, 255, 0, 255);
+    make_vertex(luigi_verts, 2, 4, 4, 0, 256, 0, 0, 255, 0, 255);
+    make_vertex(luigi_verts, 3, -4, 4, 0, 0, 0, 0, 255, 0, 255);
+
+    guTranslate(luigi_translate, (f32)(sMapX + (gLuigiState->pos[0] / 256) * areaMap->side_g + areaMap->xo_g), (f32)(sMapY - (gLuigiState->pos[2] / 256) * areaMap->side_g + areaMap->zo_g), 0.0f);
+    guRotate(luigi_rotate, (f32)(gLuigiState->faceAngle[1] / 180) + 180, 0.0f, 0.0f, 1.0f);
+
+    gSPMatrix((*dlist)++, luigi_translate, G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
+    gSPMatrix((*dlist)++, luigi_rotate, G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_NOPUSH);
+
+    gDPSetTextureFilter((*dlist)++, G_TF_POINT);
+
+    gSPVertex((*dlist)++, VIRTUAL_TO_PHYSICAL(luigi_verts), 4, 0);
     gSPDisplayList((*dlist)++, dl_draw_quad_verts_0123);
 
     gSPPopMatrix((*dlist)++, G_MTX_MODELVIEW);
 }
 
 Gfx *create_areamap_dlist(struct AreaMapData *areaMap) {
-    s32 dlCommandCount = 6 + 6 + 16;
+    s32 dlCommandCount = 6 + 12 + 16;
     Gfx *areamap = alloc_display_list(dlCommandCount * sizeof(Gfx));
     Gfx *dlist = areamap;
 

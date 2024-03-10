@@ -13,7 +13,7 @@ const GeoLayout ccm_geo_000BEC[] = {
       GEO_OPEN_NODE(),
          GEO_CAMERA_FRUSTUM_WITH_FUNC(45, 100, 12800, geo_camera_fov),
          GEO_OPEN_NODE(),
-            GEO_CAMERA(9, 0, 2000, 6000, 0, 0, 0, geo_camera_main),
+            GEO_CAMERA(5, 0, 2000, 6000, 0, 0, 0, geo_camera_main),
             GEO_OPEN_NODE(),
                GEO_DISPLAY_LIST(LAYER_OPAQUE, ccm_seg7_dl_070249A0),
                GEO_DISPLAY_LIST(LAYER_OPAQUE, ccm_seg7_dl_07024C78),

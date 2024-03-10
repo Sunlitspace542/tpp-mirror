@@ -126,6 +126,7 @@ extern s16 gPauseScreenMode;
 extern s16 gSaveOptSelectIndex;
 
 extern struct SpawnInfo *gMarioSpawnInfo;
+extern struct SpawnInfo *gLuigiSpawnInfo;
 
 extern struct Area *gAreas;
 extern struct Area *gCurrentArea;

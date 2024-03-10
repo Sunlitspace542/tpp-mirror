@@ -92,6 +92,7 @@ const LevelScript level_castle_inside_entry[] = {
     LOAD_RAW(         /*seg*/ 0x0D, _group15_geoSegmentRomStart,  _group15_geoSegmentRomEnd),
     ALLOC_LEVEL_POOL(),
     MARIO(/*model*/ MODEL_MARIO, /*behParam*/ 0x00000001, /*beh*/ bhvMario),
+    LUIGI(/*model*/ MODEL_LUIGI, /*behParam*/ 0x00000002, /*beh*/ bhvMario),
     JUMP_LINK(script_func_global_16),
     LOAD_MODEL_FROM_GEO(MODEL_CASTLE_BOWSER_TRAP,        castle_geo_000F18),
     LOAD_MODEL_FROM_GEO(MODEL_CASTLE_CASTLE_DOOR,        RCP_HmsMainDoor),
@@ -128,6 +129,7 @@ const LevelScript level_castle_inside_entry[] = {
 
     FREE_LEVEL_POOL(),
     MARIO_POS(/*area*/ 1, /*yaw*/ 180, /*pos*/ 0, 0, 0),
+    LUIGI_POS(/*area*/ 1, /*yaw*/ 180, /*pos*/ 0, 0, 0),
     CALL(/*arg*/ 0, /*func*/ lvl_init_or_update),
     CALL_LOOP(/*arg*/ 1, /*func*/ lvl_init_or_update),
     CLEAR_LEVEL(),

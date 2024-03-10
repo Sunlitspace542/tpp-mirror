@@ -147,7 +147,7 @@ struct CreditsEntry sCreditsSequence[] = {
     { LEVEL_NONE, 0, 1, 0, { 0, 0, 0 }, NULL },
 };
 
-struct MarioState gMarioStates[1];
+struct MarioState gMarioStates[2];
 struct HudDisplay gHudDisplay;
 s16 sCurrPlayMode;
 u16 D_80339ECA;
@@ -166,6 +166,7 @@ s8 sTimerRunning;
 s8 gMessageHasBeenRead;
 
 struct MarioState *gMarioState = &gMarioStates[0];
+struct MarioState *gLuigiState = &gMarioStates[1];
 u8 unused1[4] = { 0 };
 s8 D_8032C9E0 = 0;
 u8 unused3[4];

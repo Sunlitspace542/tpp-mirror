@@ -423,15 +423,27 @@ static void level_cmd_23(void) {
 }
 
 static void level_cmd_init_mario(void) {
-    vec3s_set(gMarioSpawnInfo->startPos, 0, 0, 0);
-    vec3s_set(gMarioSpawnInfo->startAngle, 0, 0, 0);
+    if (CMD_GET(u8, 2) == 0) {
+        vec3s_set(gMarioSpawnInfo->startPos, 0, 0, 0);
+        vec3s_set(gMarioSpawnInfo->startAngle, 0, 0, 0);
 
-    gMarioSpawnInfo->activeAreaIndex = -1;
-    gMarioSpawnInfo->areaIndex = 0;
-    gMarioSpawnInfo->behaviorArg = CMD_GET(u32, 4);
-    gMarioSpawnInfo->behaviorScript = CMD_GET(void *, 8);
-    gMarioSpawnInfo->unk18 = gLoadedGraphNodes[CMD_GET(u8, 3)];
-    gMarioSpawnInfo->next = NULL;
+        gMarioSpawnInfo->activeAreaIndex = -1;
+        gMarioSpawnInfo->areaIndex = 0;
+        gMarioSpawnInfo->behaviorArg = CMD_GET(u32, 4);
+        gMarioSpawnInfo->behaviorScript = CMD_GET(void *, 8);
+        gMarioSpawnInfo->unk18 = gLoadedGraphNodes[CMD_GET(u8, 3)];
+        gMarioSpawnInfo->next = NULL;
+    } else {
+        vec3s_set(gLuigiSpawnInfo->startPos, 0, 0, 0);
+        vec3s_set(gLuigiSpawnInfo->startAngle, 0, 0, 0);
+
+        gLuigiSpawnInfo->activeAreaIndex = -1;
+        gLuigiSpawnInfo->areaIndex = 0;
+        gLuigiSpawnInfo->behaviorArg = CMD_GET(u32, 4);
+        gLuigiSpawnInfo->behaviorScript = CMD_GET(void *, 8);
+        gLuigiSpawnInfo->unk18 = gLoadedGraphNodes[CMD_GET(u8, 3)];
+        gLuigiSpawnInfo->next = NULL;
+    }
 
     sCurrentCmd = CMD_NEXT;
 }
@@ -634,14 +646,25 @@ static void level_cmd_unload_area(void) {
 }
 
 static void level_cmd_set_mario_start_pos(void) {
-    gMarioSpawnInfo->areaIndex = CMD_GET(u8, 2);
+    if (CMD_GET(u8, 3) == 0) {
+        gMarioSpawnInfo->areaIndex = CMD_GET(u8, 2);
 
 #if IS_64_BIT
-    vec3s_set(gMarioSpawnInfo->startPos, CMD_GET(s16, 6), CMD_GET(s16, 8), CMD_GET(s16, 10));
+        vec3s_set(gMarioSpawnInfo->startPos, CMD_GET(s16, 6), CMD_GET(s16, 8), CMD_GET(s16, 10));
 #else
-    vec3s_copy(gMarioSpawnInfo->startPos, CMD_GET(Vec3s, 6));
+        vec3s_copy(gMarioSpawnInfo->startPos, CMD_GET(Vec3s, 6));
 #endif
-    vec3s_set(gMarioSpawnInfo->startAngle, 0, CMD_GET(s16, 4) * 0x8000 / 180, 0);
+        vec3s_set(gMarioSpawnInfo->startAngle, 0, CMD_GET(s16, 4) * 0x8000 / 180, 0);
+    } else {
+        gLuigiSpawnInfo->areaIndex = CMD_GET(u8, 2);
+
+#if IS_64_BIT
+        vec3s_set(gLuigiSpawnInfo->startPos, CMD_GET(s16, 6), CMD_GET(s16, 8), CMD_GET(s16, 10));
+#else
+        vec3s_copy(gLuigiSpawnInfo->startPos, CMD_GET(Vec3s, 6));
+#endif
+        vec3s_set(gLuigiSpawnInfo->startAngle, 0, CMD_GET(s16, 4) * 0x8000 / 180, 0);
+    }
 
     sCurrentCmd = CMD_NEXT;
 }

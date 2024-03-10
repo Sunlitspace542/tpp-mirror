@@ -21,7 +21,8 @@ enum ShadowType
      * widths and heights can be defined.
      */
     SHADOW_RECTANGLE_HARDCODED_OFFSET = 50,
-    SHADOW_CIRCLE_PLAYER = 99
+    SHADOW_CIRCLE_LUIGI = 98,
+    SHADOW_CIRCLE_MARIO = 99
 };
 
 /**
